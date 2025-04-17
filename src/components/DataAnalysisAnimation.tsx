@@ -329,10 +329,7 @@ const DataAnalysisAnimation: React.FC = () => {
                 ctx.fillRect(-width / 2, y, width, 10);
               }
               
-              // Draw some text
-              ctx.fillStyle = '#FFFFFF';
-              ctx.font = '14px Arial';
-              ctx.fillText('Data Analysis', 0, -part.height / 2 + 20);
+              // Remove the text rendering
               break;
               
             case 'stand':
