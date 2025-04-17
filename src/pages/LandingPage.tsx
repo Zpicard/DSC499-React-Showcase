@@ -8,10 +8,13 @@ import {
   useTheme,
   alpha,
   keyframes,
+  Grid,
+  Divider,
 } from '@mui/material';
 import { Element, Link as ScrollLink } from 'react-scroll';
 import { useSpring, animated } from '@react-spring/web';
 import NetworkAnimation from '../components/NetworkAnimation';
+import DataAnalysisAnimation from '../components/DataAnalysisAnimation';
 import { useNavigate } from 'react-router-dom';
 
 // Define the blink animation
@@ -267,60 +270,76 @@ const LandingPage: React.FC = () => {
         </Box>
       </Element>
 
-      {/* Navy Blue Section */}
-      <Element name="features">
-        <Box 
-          sx={{ 
-            py: 10, 
-            background: '#0A1929', // Navy blue background
-            color: 'white',
-            position: 'relative',
-            '&::before': {
-              content: '""',
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              height: '100px',
-              background: 'linear-gradient(to bottom, rgba(10, 25, 41, 0), rgba(10, 25, 41, 1))',
-              zIndex: 1,
-            }
-          }}
-        >
+      {/* Features Section */}
+      <Box sx={{ 
+        py: 10, 
+        background: '#0A1929',
+        color: 'white',
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '100px',
+          background: 'linear-gradient(to bottom, rgba(10, 25, 41, 0), rgba(10, 25, 41, 1))',
+          zIndex: 1,
+        }
+      }}>
+        <Element name="features">
           <Container maxWidth="lg">
-            <Typography
-              variant="h2"
-              sx={{
-                textAlign: 'center',
-                mb: 6,
-                fontWeight: 700,
-                color: 'white',
-                position: 'relative',
-                '&::after': {
-                  content: '""',
-                  position: 'absolute',
-                  bottom: -10,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  width: '80px',
-                  height: '4px',
-                  background: theme.palette.primary.main,
-                  borderRadius: '2px',
-                }
-              }}
-            >
-              Placeholder Title
-            </Typography>
-            
-            {/* Content will be added here later */}
-            <Box sx={{ height: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <Typography variant="h5" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                Content coming soon...
-              </Typography>
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    textAlign: 'left',
+                    mb: 6,
+                    mt: 4,
+                    fontWeight: 700,
+                    color: 'white',
+                    position: 'relative',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -10,
+                      left: 0,
+                      width: '80px',
+                      height: '4px',
+                      background: theme.palette.primary.main,
+                      borderRadius: '2px',
+                    }
+                  }}
+                >
+                  Objective
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: '1.1rem',
+                    lineHeight: 1.8,
+                    color: 'rgba(255,255,255,0.9)',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.2)'
+                  }}
+                >
+                  The objective of this project is to forecast human purchasing behavior on Instacart using machine learning models, enhanced through hyperparameter tuning and supported by thorough exploratory data analysis. A custom MySQL database was designed with defined schemas to store and query relevant data, with Python functions handling backend logic and data retrieval. To present the project interactively, a React-based website was developed and deployed via GitHub Pages, offering a dynamic showcase of the entire workflow.
+                </Typography>
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Box sx={{ 
+                  position: 'relative',
+                  height: '400px',
+                  overflow: 'hidden',
+                  background: 'transparent'
+                }}>
+                  <DataAnalysisAnimation />
+                </Box>
+              </Box>
             </Box>
           </Container>
-        </Box>
-      </Element>
+        </Element>
+      </Box>
     </Box>
   );
 };
