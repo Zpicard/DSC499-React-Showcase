@@ -9,10 +9,11 @@ import {
   alpha,
   keyframes,
   Divider,
-  Grid,
+  Stack,
   ToggleButtonGroup,
   ToggleButton,
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { Element, Link as ScrollLink } from 'react-scroll';
 import { useSpring, animated, config } from '@react-spring/web';
 import NetworkAnimation from '../components/NetworkAnimation';
@@ -34,6 +35,7 @@ import DesignIcon from '@mui/icons-material/Brush';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ResponsiveIcon from '@mui/icons-material/Devices';
 import DataScienceIcon from '@mui/icons-material/Psychology';
+import DatabaseSchema from '../components/DatabaseSchema';
 
 // Define the blink animation
 const blink = {
@@ -862,7 +864,9 @@ const LandingPage: React.FC = () => {
                   borderRadius: '2px',
                 }
               }}
-            />
+            >
+              Skills
+            </Typography>
 
             {/* Skills Section */}
             <Box 
@@ -882,6 +886,78 @@ const LandingPage: React.FC = () => {
           </Container>
         </Element>
       </Box>
+
+      {/* Database Schema Section */}
+      <Element name="database">
+        <Box sx={{ 
+          py: 10, 
+          background: '#0A1929',
+          color: 'white',
+          position: 'relative',
+        }}>
+          <Container maxWidth="lg">
+            <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4 }}>
+              <Box sx={{ flex: 0.35 }}>
+                <Typography
+                  variant="h2"
+                  sx={{
+                    textAlign: 'left',
+                    mb: 4,
+                    mt: 4,
+                    fontWeight: 700,
+                    color: 'white',
+                    position: 'relative',
+                    display: 'inline-block',
+                    fontSize: { xs: '1.8rem', md: '2.2rem' },
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -10,
+                      left: 0,
+                      width: '100%',
+                      height: '4px',
+                      background: theme.palette.primary.main,
+                      borderRadius: '2px',
+                    }
+                  }}
+                >
+                  MySQL Database Design
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    fontSize: '1rem',
+                    lineHeight: 1.6,
+                    color: 'rgba(255,255,255,0.9)',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                    maxWidth: '90%'
+                  }}
+                >
+                  The database schema is designed to facilitate data organization, provide clear visualization of cardinality and relationships between tables, support debugging and troubleshooting efforts, and enable predictive analytics modeling through efficient data structure.
+                </Typography>
+              </Box>
+              <Box sx={{ flex: 0.65 }}>
+                <Box sx={{ 
+                  position: 'relative',
+                  height: '700px',
+                  overflow: 'visible',
+                  background: 'transparent',
+                  display: 'flex',
+                  justifyContent: 'flex-start',
+                  alignItems: 'flex-start',
+                  transform: 'scale(0.85)',
+                  transformOrigin: 'top left',
+                  mt: -4,
+                  ml: -4
+                }}>
+                  <DatabaseSchema />
+                </Box>
+              </Box>
+            </Box>
+          </Container>
+        </Box>
+      </Element>
+
     </Box>
   );
 };
