@@ -12,8 +12,11 @@ import {
   Stack,
   ToggleButtonGroup,
   ToggleButton,
+  Grid,
+  GridProps,
+  Tab,
+  Tabs,
 } from '@mui/material';
-import Grid from '@mui/material/Grid';
 import { Element, Link as ScrollLink } from 'react-scroll';
 import { useSpring, animated, config } from '@react-spring/web';
 import NetworkAnimation from '../components/NetworkAnimation';
@@ -36,6 +39,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import ResponsiveIcon from '@mui/icons-material/Devices';
 import DataScienceIcon from '@mui/icons-material/Psychology';
 import DatabaseSchema from '../components/DatabaseSchema';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 // Define the blink animation
 const blink = {
@@ -496,6 +501,1150 @@ const SkillsShowcase: React.FC<{ theme: any }> = ({ theme }) => {
   );
 };
 
+// Add this new component for the tabbed sections
+const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
+  const [activeTab, setActiveTab] = useState(0);
+  
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
+  
+  return (
+    <Box
+      sx={{
+        py: 10,
+        background: `linear-gradient(135deg, ${alpha('#40B5AD', 0.1)} 0%, ${alpha('#0A1929', 0.05)} 100%)`,
+        backdropFilter: 'blur(10px)',
+        borderRadius: '0',
+        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box sx={{ width: '100%' }}>
+          <Box sx={{ 
+            borderBottom: 1, 
+            borderColor: 'divider',
+            mb: 6,
+            display: 'flex',
+            justifyContent: 'center',
+            position: 'relative',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              bottom: 0,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              width: '80%',
+              height: '1px',
+              background: alpha('#0A1929', 0.1),
+            }
+          }}>
+            <Tabs 
+              value={activeTab} 
+              onChange={handleTabChange} 
+              aria-label="data processing tabs"
+              sx={{
+                position: 'relative',
+                '& .MuiTabs-indicator': {
+                  backgroundColor: '#0A1929',
+                  height: 3,
+                  borderRadius: '3px',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                },
+                '& .MuiTab-root': {
+                  color: alpha('#0A1929', 0.7),
+                  fontSize: '1.1rem',
+                  fontWeight: 500,
+                  textTransform: 'none',
+                  minWidth: 200,
+                  transition: 'all 0.3s ease',
+                  position: 'relative',
+                  padding: '12px 24px',
+                  borderRadius: '8px 8px 0 0',
+                  margin: '0 8px',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    background: alpha('#0A1929', 0.03),
+                    borderRadius: '8px 8px 0 0',
+                    transition: 'all 0.3s ease',
+                    zIndex: -1,
+                  },
+                  '&:hover': {
+                    color: '#0A1929',
+                    '&::before': {
+                      background: alpha('#0A1929', 0.08),
+                    },
+                  },
+                  '&.Mui-selected': {
+                    color: '#0A1929',
+                    fontWeight: 700,
+                    '&::before': {
+                      background: alpha('#0A1929', 0.05),
+                    },
+                  },
+                },
+              }}
+            >
+              <Tab 
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box 
+                      sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        width: 24,
+                        height: 24,
+                        borderRadius: '50%',
+                        background: activeTab === 0 ? alpha('#0A1929', 0.1) : 'transparent',
+                        color: activeTab === 0 ? '#0A1929' : alpha('#0A1929', 0.7),
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z" fill="currentColor"/>
+                        <path d="M7 12H9V17H7V12Z" fill="currentColor"/>
+                        <path d="M11 7H13V17H11V7Z" fill="currentColor"/>
+                        <path d="M15 9H17V17H15V9Z" fill="currentColor"/>
+                      </svg>
+                    </Box>
+                    <span>Data Cleaning Pipeline</span>
+                  </Box>
+                } 
+              />
+              <Tab 
+                label={
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box 
+                      sx={{ 
+                        display: 'flex', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        width: 24,
+                        height: 24,
+                        borderRadius: '50%',
+                        background: activeTab === 1 ? alpha('#0A1929', 0.1) : 'transparent',
+                        color: activeTab === 1 ? '#0A1929' : alpha('#0A1929', 0.7),
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19Z" fill="currentColor"/>
+                        <path d="M7 7H9V9H7V7Z" fill="currentColor"/>
+                        <path d="M11 7H13V9H11V7Z" fill="currentColor"/>
+                        <path d="M15 7H17V9H15V7Z" fill="currentColor"/>
+                        <path d="M7 11H9V13H7V11Z" fill="currentColor"/>
+                        <path d="M11 11H13V13H11V11Z" fill="currentColor"/>
+                        <path d="M15 11H17V13H15V11Z" fill="currentColor"/>
+                        <path d="M7 15H9V17H7V15Z" fill="currentColor"/>
+                        <path d="M11 15H13V17H11V15Z" fill="currentColor"/>
+                        <path d="M15 15H17V17H15V15Z" fill="currentColor"/>
+                      </svg>
+                    </Box>
+                    <span>ETL Pipeline</span>
+                  </Box>
+                } 
+              />
+            </Tabs>
+          </Box>
+          
+          {/* Data Cleaning Pipeline Tab */}
+          {activeTab === 0 && (
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 6,
+              }}
+            >
+              <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '1000px' }}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    color: '#0A1929',
+                    fontWeight: 700,
+                    mb: 3,
+                    fontSize: { xs: '2rem', md: '2.5rem' },
+                    position: 'relative',
+                    display: 'inline-block',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -8,
+                      left: 0,
+                      width: '100%',
+                      height: '4px',
+                      background: '#0A1929',
+                      borderRadius: '2px',
+                    }
+                  }}
+                >
+                  Data Cleaning Pipeline
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#0A1929',
+                    mb: 3,
+                    lineHeight: 1.8,
+                    fontSize: '1.1rem',
+                  }}
+                >
+                  Our data preprocessing pipeline ensures data quality and consistency through systematic cleaning procedures. 
+                  We convert CSV data to JSON format for better structure, remove special characters for standardization, 
+                  and implement robust null value handling. This clean, structured data foundation enables efficient 
+                  database operations and accurate predictive modeling. The pipeline includes handling missing values, 
+                  removing duplicates, standardizing text data, and ensuring data type consistency across all datasets.
+                </Typography>
+              </Box>
+              <Box sx={{ 
+                width: '100%', 
+                display: 'flex', 
+                flexDirection: { xs: 'column', md: 'row' }, 
+                gap: 4,
+                justifyContent: 'center',
+              }}>
+                <Box sx={{ flex: 1, maxWidth: '600px' }}>
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 2,
+                      background: alpha('#1E1E1E', 0.95),
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        mb: 1,
+                        px: 2,
+                        py: 1.5,
+                        background: alpha('#0A1929', 0.8),
+                        borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FF5F56',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FFBD2E',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#27C93F',
+                          }}
+                        />
+                      </Box>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          color: alpha(theme.palette.common.white, 0.7),
+                          ml: 2,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Text Cleaning
+                      </Typography>
+                    </Box>
+                    <SyntaxHighlighter
+                      language="python"
+                      style={vscDarkPlus}
+                      customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        background: 'transparent',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      {`import pandas as pd
+import re
+
+
+file_path = 'products.csv' 
+df = pd.read_csv(file_path)
+
+
+def remove_special_characters(text):
+    
+    return re.sub(r'[^a-zA-Z0-9\\s]', '', text)
+
+
+df['product_name'] = df['product_name'].apply(remove_special_characters)
+
+
+cleaned_file_path = 'products_cleaned.csv'  # Change this to your desired output path
+df.to_csv(cleaned_file_path, index=False)
+
+print("Special characters removed and saved to", cleaned_file_path)`}
+                    </SyntaxHighlighter>
+                  </Paper>
+                </Box>
+                <Box sx={{ flex: 1, maxWidth: '600px' }}>
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 2,
+                      background: alpha('#1E1E1E', 0.95),
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        mb: 1,
+                        px: 2,
+                        py: 1.5,
+                        background: alpha('#0A1929', 0.8),
+                        borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FF5F56',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FFBD2E',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#27C93F',
+                          }}
+                        />
+                      </Box>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          color: alpha(theme.palette.common.white, 0.7),
+                          ml: 2,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Convert to JSON
+                      </Typography>
+                    </Box>
+                    <SyntaxHighlighter
+                      language="python"
+                      style={vscDarkPlus}
+                      customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        background: 'transparent',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      {`#Convert to JSON for faulty upload of data
+import pandas as pd
+
+
+file_path = 'CSVSourceData/products_cleaned.csv' 
+df = pd.read_csv(file_path)
+
+
+json_data = df.to_json(orient='records')
+
+
+with open('products_cleaned_JSON.json', 'w') as json_file:
+    json_file.write(json_data)
+
+print("Data successfully converted to JSON format.")`}
+                    </SyntaxHighlighter>
+                  </Paper>
+                </Box>
+              </Box>
+            </Box>
+          )}
+          
+          {/* ETL Pipeline Tab */}
+          {activeTab === 1 && (
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 6,
+            }}>
+              {/* Header Section */}
+              <Box 
+                sx={{ 
+                  width: '100%', 
+                  textAlign: 'center', 
+                  maxWidth: '1000px',
+                  margin: '0 auto',
+                  position: 'relative',
+                  mb: 4,
+                }}
+              >
+                <Typography
+                  variant="h3"
+                  sx={{
+                    color: '#0A1929',
+                    fontWeight: 700,
+                    mb: 3,
+                    fontSize: { xs: '2rem', md: '2.5rem' },
+                    letterSpacing: '-0.02em',
+                    position: 'relative',
+                    display: 'inline-block',
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: -8,
+                      left: 0,
+                      width: '100%',
+                      height: '4px',
+                      background: '#0A1929',
+                      borderRadius: '2px',
+                    }
+                  }}
+                >
+                  ETL Pipeline
+                </Typography>
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: '#0A1929',
+                    mb: 3,
+                    lineHeight: 1.8,
+                    fontSize: '1.1rem',
+                    maxWidth: '1200px',
+                    margin: '0 auto',
+                  }}
+                >
+                  Our ETL (Extract, Transform, Load) pipeline efficiently manages the data flow from MySQL database to pandas DataFrames. 
+                  The extraction process begins with secure database connections using environment variables for credentials. 
+                  We implement robust error handling and connection management to ensure data integrity. The transformation phase 
+                  includes complex SQL queries that join multiple tables (orders, products, aisles, departments) to create comprehensive 
+                  datasets for machine learning. The pipeline features a flexible user-based data extraction system, allowing for 
+                  customizable data sampling based on user IDs. This structured approach enables efficient data processing while 
+                  maintaining security and scalability for large-scale analysis.
+                </Typography>
+              </Box>
+              
+              {/* Main Content */}
+              <Box sx={{ 
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 6,
+              }}>
+                {/* Code Snippets Row */}
+                <Box sx={{ 
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+                  gap: 4,
+                }}>
+                  {/* Database Connection Code */}
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 0,
+                      background: alpha('#1E1E1E', 0.95),
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        p: 1.5,
+                        background: alpha('#0A1929', 0.8),
+                        borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FF5F56',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FFBD2E',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#27C93F',
+                          }}
+                        />
+                      </Box>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          color: alpha(theme.palette.common.white, 0.7),
+                          ml: 2,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Database Connection & Query Execution
+                      </Typography>
+                    </Box>
+                    <SyntaxHighlighter
+                      language="python"
+                      style={vscDarkPlus}
+                      customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        background: 'transparent',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      {`import mysql.connector
+from mysql.connector import Error
+from dotenv import load_dotenv
+import os
+import pandas as pd
+
+# Load credentials from .env file
+load_dotenv('SQL_PW.env')
+user_from_envfile = os.getenv("SQL_User")
+pw_from_envfile = os.getenv("SQL_Pass")
+
+# Create connection to MySQL Database
+def create_connection():
+    try:
+        connection = mysql.connector.connect(
+            host='localhost',
+            user=user_from_envfile,
+            password=pw_from_envfile,
+            database='orders_prediction_db'
+        )
+        if connection.is_connected():
+            print("Successfully connected to the MySQL database")
+        return connection
+    except Error as e:
+        print(f"Error while connecting to MySQL: {e}")
+        return None
+
+# Method for executing query
+def execute_query(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        results = cursor.fetchall()
+        for row in results:
+            print(row)
+    except Error as e:
+        print(f"Error executing query: {e}")`}
+                    </SyntaxHighlighter>
+                  </Paper>
+                  
+                  {/* Data Transformation Code */}
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 0,
+                      background: alpha('#1E1E1E', 0.95),
+                      borderRadius: '16px',
+                      overflow: 'hidden',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        p: 1.5,
+                        background: alpha('#0A1929', 0.8),
+                        borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FF5F56',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#FFBD2E',
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            width: 12,
+                            height: 12,
+                            borderRadius: '50%',
+                            background: '#27C93F',
+                          }}
+                        />
+                      </Box>
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          color: alpha(theme.palette.common.white, 0.7),
+                          ml: 2,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Data Transformation & Loading
+                      </Typography>
+                    </Box>
+                    <SyntaxHighlighter
+                      language="python"
+                      style={vscDarkPlus}
+                      customStyle={{
+                        margin: 0,
+                        padding: '1.5rem',
+                        background: 'transparent',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      {`# METHOD TO CREATE BASIS FOR ML ALGORITHMS PULLING FROM SQL with editable number of users
+def query_to_dataframe_for_users(connection, start_user_id, end_user_id):
+    cursor = connection.cursor()
+    try:
+        query = f"""
+        SELECT 
+            o.user_id,
+            o.order_id,
+            o.order_number,
+            o.eval_set,
+            COALESCE(op.product_id, ot.product_id) AS product_id,
+            COALESCE(op.reordered, ot.reordered) AS reordered,
+            o.order_dow,
+            o.order_hour_of_day,
+            o.days_since_prior_order,
+            p.product_name,
+            p.aisle_id,
+            p.department_id,
+            a.aisle AS aisle_name,
+            d.department AS department_name
+        FROM orders o
+        LEFT JOIN order_products_prior op 
+            ON o.order_id = op.order_id 
+            AND o.eval_set = 'prior'
+        LEFT JOIN order_products_train ot 
+            ON o.order_id = ot.order_id 
+            AND o.eval_set = 'train'
+        LEFT JOIN products p 
+            ON COALESCE(op.product_id, ot.product_id) = p.product_id
+        LEFT JOIN aisles a 
+            ON p.aisle_id = a.aisle_id
+        LEFT JOIN departments d 
+            ON p.department_id = d.department_id
+        WHERE o.user_id BETWEEN {start_user_id} AND {end_user_id}
+          AND (o.eval_set = 'prior' OR o.eval_set = 'train')
+        ORDER BY o.user_id, o.order_number, product_id;
+        """
+        cursor.execute(query)
+        columns = [col[0] for col in cursor.description]
+        rows = cursor.fetchall()
+        return pd.DataFrame(rows, columns=columns)
+    except Error as e:
+        print(f"Error executing query: {e}")
+        return None
+
+# Example usage:
+connection = create_connection()
+if connection:
+    # Specify user range (e.g., user IDs from 1 to 10)
+    df = query_to_dataframe_for_users(connection, 1, 10)
+    print(df.head())  # Display first few rows of the resulting dataframe
+    connection.close()`}
+                    </SyntaxHighlighter>
+                  </Paper>
+                </Box>
+                
+                {/* Features Cards Row */}
+                <Box sx={{ 
+                  display: 'grid',
+                  gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
+                  gap: 4,
+                }}>
+                  {/* Database Functions Card */}
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 4,
+                      background: '#0A1929',
+                      borderRadius: '16px',
+                      border: `1px solid ${alpha('#fff', 0.1)}`,
+                      transition: 'all 0.3s ease',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                        background: '#0A1929',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: '50%',
+                        background: alpha('#fff', 0.1),
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        fontSize: '1.2rem',
+                        fontWeight: 600,
+                        mb: 3,
+                      }}
+                    >
+                      1
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: '#fff',
+                        fontWeight: 600,
+                        mb: 2,
+                      }}
+                    >
+                      Database Functions
+                    </Typography>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: alpha('#fff', 0.9),
+                          mb: 1.5,
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#fff',
+                            mt: 1,
+                          }}
+                        />
+                        Created multiple Python functions to establish and manage connections to local MySQL database
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: alpha('#fff', 0.9),
+                          mb: 1.5,
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#fff',
+                            mt: 1,
+                          }}
+                        />
+                        Implemented functions for querying random samples from large tables for EDA
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: alpha('#fff', 0.9),
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#fff',
+                            mt: 1,
+                          }}
+                        />
+                        Developed comprehensive query functions to extract complete datasets
+                      </Typography>
+                    </Box>
+                  </Paper>
+                  
+                  {/* Data Transformation Card */}
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 4,
+                      background: '#0A1929',
+                      borderRadius: '16px',
+                      border: `1px solid ${alpha('#fff', 0.1)}`,
+                      transition: 'all 0.3s ease',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                        background: '#0A1929',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: '50%',
+                        background: alpha('#fff', 0.1),
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        fontSize: '1.2rem',
+                        fontWeight: 600,
+                        mb: 3,
+                      }}
+                    >
+                      2
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: '#fff',
+                        fontWeight: 600,
+                        mb: 2,
+                      }}
+                    >
+                      Data Transformation
+                    </Typography>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: alpha('#fff', 0.9),
+                          mb: 1.5,
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#fff',
+                            mt: 1,
+                          }}
+                        />
+                        Built transformation functions to convert MySQL query results into pandas DataFrames
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: alpha('#fff', 0.9),
+                          mb: 1.5,
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#fff',
+                            mt: 1,
+                          }}
+                        />
+                        Implemented efficient data processing for large-scale analysis
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: alpha('#fff', 0.9),
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: 1,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 6,
+                            height: 6,
+                            borderRadius: '50%',
+                            background: '#fff',
+                            mt: 1,
+                          }}
+                        />
+                        Ensured data integrity through robust error handling
+                      </Typography>
+                    </Box>
+                  </Paper>
+                  
+                  {/* Technology Stack Card */}
+                  <Paper
+                    elevation={0}
+                    sx={{
+                      p: 4,
+                      background: '#0A1929',
+                      borderRadius: '16px',
+                      border: `1px solid ${alpha('#fff', 0.1)}`,
+                      transition: 'all 0.3s ease',
+                      height: '100%',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                        background: '#0A1929',
+                      }
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        width: 48,
+                        height: 48,
+                        borderRadius: '50%',
+                        background: alpha('#fff', 0.1),
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: '#fff',
+                        fontSize: '1.2rem',
+                        fontWeight: 600,
+                        mb: 3,
+                      }}
+                    >
+                      3
+                    </Box>
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: '#fff',
+                        fontWeight: 600,
+                        mb: 2,
+                      }}
+                    >
+                      Technology Stack
+                    </Typography>
+                    <Box sx={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: '1fr 1fr',
+                      gap: 2,
+                      flex: 1,
+                    }}>
+                      <Box
+                        sx={{
+                          p: 2,
+                          background: alpha('#fff', 0.1),
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            background: alpha('#fff', 0.15),
+                            transform: 'translateY(-3px)',
+                          }
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: '50%',
+                            background: '#fff',
+                          }}
+                        />
+                        <Typography variant="body2" sx={{ color: '#fff' }}>
+                          mysql.connector
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          p: 2,
+                          background: alpha('#fff', 0.1),
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            background: alpha('#fff', 0.15),
+                            transform: 'translateY(-3px)',
+                          }
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: '50%',
+                            background: '#fff',
+                          }}
+                        />
+                        <Typography variant="body2" sx={{ color: '#fff' }}>
+                          dotenv
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          p: 2,
+                          background: alpha('#fff', 0.1),
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            background: alpha('#fff', 0.15),
+                            transform: 'translateY(-3px)',
+                          }
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: '50%',
+                            background: '#fff',
+                          }}
+                        />
+                        <Typography variant="body2" sx={{ color: '#fff' }}>
+                          os
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          p: 2,
+                          background: alpha('#fff', 0.1),
+                          borderRadius: '8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 1,
+                          transition: 'all 0.2s ease',
+                          '&:hover': {
+                            background: alpha('#fff', 0.15),
+                            transform: 'translateY(-3px)',
+                          }
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: 8,
+                            height: 8,
+                            borderRadius: '50%',
+                            background: '#fff',
+                          }}
+                        />
+                        <Typography variant="body2" sx={{ color: '#fff' }}>
+                          pandas
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Paper>
+                </Box>
+              </Box>
+            </Box>
+          )}
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
 const LandingPage: React.FC = () => {
   const theme = useTheme();
   const [displayedText, setDisplayedText] = useState('');
@@ -786,11 +1935,11 @@ const LandingPage: React.FC = () => {
                     '&::after': {
                       content: '""',
                       position: 'absolute',
-                      bottom: -10,
+                      bottom: -8,
                       left: 0,
                       width: '100%',
                       height: '4px',
-                      background: theme.palette.primary.main,
+                      background: '#0A1929',
                       borderRadius: '2px',
                     }
                   }}
@@ -856,11 +2005,11 @@ const LandingPage: React.FC = () => {
                 '&::after': {
                   content: '""',
                   position: 'absolute',
-                  bottom: -10,
+                  bottom: -8,
                   left: 0,
                   width: '100%',
                   height: '4px',
-                  background: theme.palette.primary.main,
+                  background: '#0A1929',
                   borderRadius: '2px',
                 }
               }}
@@ -912,11 +2061,11 @@ const LandingPage: React.FC = () => {
                     '&::after': {
                       content: '""',
                       position: 'absolute',
-                      bottom: -10,
+                      bottom: -8,
                       left: 0,
                       width: '100%',
                       height: '4px',
-                      background: theme.palette.primary.main,
+                      background: '#0A1929',
                       borderRadius: '2px',
                     }
                   }}
@@ -958,6 +2107,592 @@ const LandingPage: React.FC = () => {
         </Box>
       </Element>
 
+      <Box sx={{ 
+        background: alpha('#40B5AD', 0.15),
+        backdropFilter: 'blur(10px)',
+        width: '100%',
+        margin: 0,
+        padding: 0,
+      }}>
+        <Element name="data-processing">
+          <DataProcessingTabs theme={theme} />
+        </Element>
+      </Box>
+
+      {/* Exploratory Data Analysis Section */}
+      <Box sx={{ 
+        py: 10, 
+        background: '#0A1929',
+        color: 'white',
+        position: 'relative',
+      }}>
+        <Container maxWidth="lg">
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 6,
+          }}>
+            <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '1000px' }}>
+              <Typography
+                variant="h3"
+                sx={{
+                  color: 'white',
+                  fontWeight: 700,
+                  mb: 3,
+                  fontSize: { xs: '2rem', md: '2.5rem' },
+                  position: 'relative',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: -8,
+                    left: 0,
+                    width: '100%',
+                    height: '4px',
+                    background: 'white',
+                    borderRadius: '2px',
+                  }
+                }}
+              >
+                Exploratory Data Analysis
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  color: 'rgba(255,255,255,0.9)',
+                  mb: 3,
+                  lineHeight: 1.8,
+                  fontSize: '1.1rem',
+                }}
+              >
+                Our exploratory data analysis process involves comprehensive data visualization and statistical analysis 
+                to uncover patterns, trends, and insights in the grocery sales data. We utilize various visualization 
+                techniques including order patterns, product popularity, and department analysis to understand 
+                the relationships between different variables. This analysis helps identify key factors influencing 
+                customer behavior and guides our feature engineering process for the predictive models.
+              </Typography>
+            </Box>
+            
+            {/* Visualization Gallery */}
+            <Box sx={{ 
+              width: '100%', 
+              display: 'flex', 
+              flexDirection: 'column',
+              gap: 4,
+            }}>
+              <Typography
+                variant="h4"
+                sx={{
+                  color: 'white',
+                  fontWeight: 600,
+                  mb: 2,
+                  fontSize: { xs: '1.5rem', md: '1.8rem' },
+                  textAlign: 'center',
+                }}
+              >
+                Key Visualizations
+              </Typography>
+              
+              <Box sx={{ 
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                gap: 3,
+                width: '100%',
+              }}>
+                {/* Order Counts by Day of Week */}
+                <Box 
+                  sx={{ 
+                    position: 'relative',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    aspectRatio: '16/9',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    background: alpha('#1E1E1E', 0.3),
+                    '&:hover': {
+                      transform: 'scale(1.02)',
+                      '& .overlay': {
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                >
+                  <img 
+                    src={process.env.PUBLIC_URL + "/images/visualizations/OrderCountsByDayOfTheWeek.png"} 
+                    alt="Order Counts by Day of Week" 
+                    style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      padding: '10px',
+                    }}
+                  />
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.7)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease',
+                      p: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'white',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        mb: 1,
+                      }}
+                    >
+                      Order Counts by Day of Week
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'rgba(255,255,255,0.8)',
+                        textAlign: 'center',
+                      }}
+                    >
+                      Distribution of orders across different days of the week
+                    </Typography>
+                  </Box>
+                </Box>
+                
+                {/* Top 10 Aisles */}
+                <Box 
+                  sx={{ 
+                    position: 'relative',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    aspectRatio: '16/9',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    background: alpha('#1E1E1E', 0.3),
+                    '&:hover': {
+                      transform: 'scale(1.02)',
+                      '& .overlay': {
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                >
+                  <img 
+                    src={process.env.PUBLIC_URL + "/images/visualizations/Top10AsilesWithHighestNumberOfProducts.png"} 
+                    alt="Top 10 Aisles" 
+                    style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      padding: '10px',
+                    }}
+                  />
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.7)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease',
+                      p: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'white',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        mb: 1,
+                      }}
+                    >
+                      Top 10 Aisles
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'rgba(255,255,255,0.8)',
+                        textAlign: 'center',
+                      }}
+                    >
+                      Most popular aisles based on product count
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* Top 10 Most Frequently Purchased Products */}
+                <Box 
+                  sx={{ 
+                    position: 'relative',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    aspectRatio: '16/9',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    background: alpha('#1E1E1E', 0.3),
+                    '&:hover': {
+                      transform: 'scale(1.02)',
+                      '& .overlay': {
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                >
+                  <img 
+                    src={process.env.PUBLIC_URL + "/images/visualizations/Top10MostFrequentlyPurchasesProducts.png"} 
+                    alt="Top 10 Products" 
+                    style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      padding: '10px',
+                    }}
+                  />
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.7)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease',
+                      p: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'white',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        mb: 1,
+                      }}
+                    >
+                      Top 10 Products
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'rgba(255,255,255,0.8)',
+                        textAlign: 'center',
+                      }}
+                    >
+                      Most frequently purchased products in the dataset
+                    </Typography>
+                  </Box>
+                </Box>
+
+                {/* Order Frequency by Department */}
+                <Box 
+                  sx={{ 
+                    position: 'relative',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    aspectRatio: '16/9',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    background: alpha('#1E1E1E', 0.3),
+                    '&:hover': {
+                      transform: 'scale(1.02)',
+                      '& .overlay': {
+                        opacity: 1,
+                      },
+                    },
+                  }}
+                >
+                  <img 
+                    src={process.env.PUBLIC_URL + "/images/visualizations/OrderFrequencyByDepartment.png"} 
+                    alt="Order Frequency by Department" 
+                    style={{ 
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      padding: '10px',
+                    }}
+                  />
+                  <Box
+                    className="overlay"
+                    sx={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      background: 'rgba(0,0,0,0.7)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      opacity: 0,
+                      transition: 'opacity 0.3s ease',
+                      p: 2,
+                    }}
+                  >
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: 'white',
+                        fontWeight: 600,
+                        textAlign: 'center',
+                        mb: 1,
+                      }}
+                    >
+                      Order Frequency by Department
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: 'rgba(255,255,255,0.8)',
+                        textAlign: 'center',
+                      }}
+                    >
+                      Distribution of orders across different departments
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+            
+            {/* Code Examples */}
+            <Box sx={{ 
+              width: '100%', 
+              display: 'flex', 
+              flexDirection: { xs: 'column', md: 'row' }, 
+              gap: 4,
+              justifyContent: 'center',
+              mt: 4,
+            }}>
+              <Box sx={{ flex: 1, maxWidth: '600px' }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    background: alpha('#1E1E1E', 0.95),
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                    }
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      mb: 1,
+                      px: 2,
+                      py: 1.5,
+                      background: alpha('#0A1929', 0.8),
+                      borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FF5F56',
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FFBD2E',
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#27C93F',
+                        }}
+                      />
+                    </Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: alpha(theme.palette.common.white, 0.7),
+                        ml: 2,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Order Counts by Day of Week
+                    </Typography>
+                  </Box>
+                  <SyntaxHighlighter
+                    language="python"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      margin: 0,
+                      padding: '1.5rem',
+                      background: 'transparent',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    {`#Visualize order counts on different days
+orders_by_dow = orders_df['order_dow'].value_counts().sort_index()
+sns.set(style="darkgrid", palette="pastel")
+plt.figure(figsize=(12, 7))
+ax = sns.lineplot(x=orders_by_dow.index, y=orders_by_dow.values, marker="o", color="deepskyblue", linewidth=3)
+peak_day = orders_by_dow.idxmax()
+plt.plot(peak_day, orders_by_dow[peak_day], marker="o", markersize=12, color="crimson", label="Peak Day")
+plt.title("Order Counts by Day of the Week", fontsize=18, fontweight="bold", color="midnightblue")
+plt.xlabel("Day of the Week", fontsize=14, color="midnightblue")
+plt.ylabel("Order Count", fontsize=14, color="midnightblue")
+plt.xticks(ticks=range(7), labels=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], rotation=45, fontsize=12)
+plt.yticks(fontsize=12)
+plt.legend(["Order Trend", "Peak Day"], loc="upper left", fontsize=12, frameon=True, shadow=True, fancybox=True)
+plt.grid(visible=True, color="gray", linestyle="--", linewidth=0.5, alpha=0.7)
+plt.tight_layout()
+plt.show()`}
+                  </SyntaxHighlighter>
+                </Paper>
+              </Box>
+              <Box sx={{ flex: 1, maxWidth: '600px' }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 2,
+                    background: alpha('#1E1E1E', 0.95),
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                    }
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      mb: 1,
+                      px: 2,
+                      py: 1.5,
+                      background: alpha('#0A1929', 0.8),
+                      borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FF5F56',
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FFBD2E',
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#27C93F',
+                        }}
+                      />
+                    </Box>
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: alpha(theme.palette.common.white, 0.7),
+                        ml: 2,
+                        fontWeight: 500,
+                      }}
+                    >
+                      Order Frequency by Department
+                    </Typography>
+                  </Box>
+                  <SyntaxHighlighter
+                    language="python"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      margin: 0,
+                      padding: '1.5rem',
+                      background: 'transparent',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    {`# Merge prior orders and departments to see order frequency by dept.
+merged_df = pd.merge(order_products_prior_df, products_df, on='product_id')
+merged_df = pd.merge(merged_df, departments_df, on='department_id')
+
+dept_order_counts = merged_df['department'].value_counts().sort_values(ascending=False)
+
+dept_order_df = pd.DataFrame(dept_order_counts).reset_index()
+dept_order_df.columns = ['Department', 'Order Frequency']
+
+sns.set(style="white")
+plt.figure(figsize=(12, 8))
+
+heatmap_data = dept_order_df.pivot_table(index='Department', values='Order Frequency', aggfunc='sum')
+ax = sns.heatmap(heatmap_data, annot=True, fmt=".0f", cmap="YlGnBu", cbar=True, linewidths=1, linecolor="black")
+
+ax.set_title("Order Frequency by Department", fontsize=18, fontweight="bold", color="midnightblue")
+ax.set_xlabel("Order Frequency", fontsize=14, color="midnightblue")
+ax.set_ylabel("Department", fontsize=14, color="midnightblue")
+
+plt.tight_layout()
+plt.show()`}
+                  </SyntaxHighlighter>
+                </Paper>
+              </Box>
+            </Box>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 };
