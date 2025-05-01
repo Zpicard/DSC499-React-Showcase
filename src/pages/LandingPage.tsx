@@ -44,6 +44,7 @@ import DataScienceIcon from '@mui/icons-material/Psychology';
 import DatabaseSchema from '../components/DatabaseSchema';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import ModelPerformance from '../components/ModelPerformance';
 
 // Define the blink animation
 const blink = {
@@ -3234,6 +3235,7 @@ plt.show()`}
         </Container>
       </Box>
       <MLApproachSection theme={theme} />
+      <ModelPerformance />
     </Box>
   );
 };
