@@ -12,10 +12,13 @@ import {
   Stack,
   ToggleButtonGroup,
   ToggleButton,
-  Grid,
-  GridProps,
   Tab,
   Tabs,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from '@mui/material';
 import { Element, Link as ScrollLink } from 'react-scroll';
 import { useSpring, animated, config } from '@react-spring/web';
@@ -550,7 +553,6 @@ const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
                   height: 3,
                   borderRadius: '3px',
                   transition: 'all 0.3s ease',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                 },
                 '& .MuiTab-root': {
                   color: alpha('#0A1929', 0.7),
@@ -563,30 +565,14 @@ const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
                   padding: '12px 24px',
                   borderRadius: '8px 8px 0 0',
                   margin: '0 8px',
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: '100%',
-                    height: '100%',
-                    background: alpha('#0A1929', 0.03),
-                    borderRadius: '8px 8px 0 0',
-                    transition: 'all 0.3s ease',
-                    zIndex: -1,
-                  },
                   '&:hover': {
                     color: '#0A1929',
-                    '&::before': {
-                      background: alpha('#0A1929', 0.08),
-                    },
+                    backgroundColor: alpha('#0A1929', 0.05),
                   },
                   '&.Mui-selected': {
                     color: '#0A1929',
                     fontWeight: 700,
-                    '&::before': {
-                      background: alpha('#0A1929', 0.05),
-                    },
+                    backgroundColor: alpha('#0A1929', 0.05),
                   },
                 },
               }}
@@ -664,11 +650,22 @@ const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
                 gap: 6,
               }}
             >
-              <Box sx={{ width: '100%', textAlign: 'center', maxWidth: '1000px' }}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 4,
+                  background: '#0A1929',
+                  borderRadius: '16px',
+                  border: `1px solid ${alpha('#fff', 0.1)}`,
+                  width: '100%',
+                  maxWidth: '1000px',
+                  margin: '0 auto',
+                }}
+              >
                 <Typography
                   variant="h3"
                   sx={{
-                    color: '#0A1929',
+                    color: 'white',
                     fontWeight: 700,
                     mb: 3,
                     fontSize: { xs: '2rem', md: '2.5rem' },
@@ -681,7 +678,7 @@ const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
                       left: 0,
                       width: '100%',
                       height: '4px',
-                      background: '#0A1929',
+                      background: 'white',
                       borderRadius: '2px',
                     }
                   }}
@@ -691,7 +688,7 @@ const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
                 <Typography
                   variant="body1"
                   sx={{
-                    color: '#0A1929',
+                    color: 'rgba(255,255,255,0.9)',
                     mb: 3,
                     lineHeight: 1.8,
                     fontSize: '1.1rem',
@@ -703,7 +700,7 @@ const DataProcessingTabs: React.FC<{ theme: any }> = ({ theme }) => {
                   database operations and accurate predictive modeling. The pipeline includes handling missing values, 
                   removing duplicates, standardizing text data, and ensuring data type consistency across all datasets.
                 </Typography>
-              </Box>
+              </Paper>
               <Box sx={{ 
                 width: '100%', 
                 display: 'flex', 
@@ -923,21 +920,22 @@ print("Data successfully converted to JSON format.")`}
               flexDirection: 'column',
               gap: 6,
             }}>
-              {/* Header Section */}
-              <Box 
-                sx={{ 
-                  width: '100%', 
-                  textAlign: 'center', 
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 4,
+                  background: '#0A1929',
+                  borderRadius: '16px',
+                  border: `1px solid ${alpha('#fff', 0.1)}`,
+                  width: '100%',
                   maxWidth: '1000px',
                   margin: '0 auto',
-                  position: 'relative',
-                  mb: 4,
                 }}
               >
                 <Typography
                   variant="h3"
                   sx={{
-                    color: '#0A1929',
+                    color: 'white',
                     fontWeight: 700,
                     mb: 3,
                     fontSize: { xs: '2rem', md: '2.5rem' },
@@ -951,7 +949,7 @@ print("Data successfully converted to JSON format.")`}
                       left: 0,
                       width: '100%',
                       height: '4px',
-                      background: '#0A1929',
+                      background: 'white',
                       borderRadius: '2px',
                     }
                   }}
@@ -961,7 +959,7 @@ print("Data successfully converted to JSON format.")`}
                 <Typography
                   variant="body1"
                   sx={{
-                    color: '#0A1929',
+                    color: 'rgba(255,255,255,0.9)',
                     mb: 3,
                     lineHeight: 1.8,
                     fontSize: '1.1rem',
@@ -977,99 +975,93 @@ print("Data successfully converted to JSON format.")`}
                   customizable data sampling based on user IDs. This structured approach enables efficient data processing while 
                   maintaining security and scalability for large-scale analysis.
                 </Typography>
-              </Box>
-              
-              {/* Main Content */}
+              </Paper>
+
+              {/* Code Snippets Row */}
               <Box sx={{ 
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 6,
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+                gap: 4,
               }}>
-                {/* Code Snippets Row */}
-                <Box sx={{ 
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
-                  gap: 4,
-                }}>
-                  {/* Database Connection Code */}
-                  <Paper
-                    elevation={0}
+                {/* Database Connection Code */}
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 0,
+                    background: alpha('#1E1E1E', 0.95),
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                    }
+                  }}
+                >
+                  <Box
                     sx={{
-                      p: 0,
-                      background: alpha('#1E1E1E', 0.95),
-                      borderRadius: '16px',
-                      overflow: 'hidden',
-                      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
-                      }
+                      display: 'flex',
+                      alignItems: 'center',
+                      p: 1.5,
+                      background: alpha('#0A1929', 0.8),
+                      borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
                     }}
                   >
                     <Box
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        p: 1.5,
-                        background: alpha('#0A1929', 0.8),
-                        borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                        gap: 1,
                       }}
                     >
                       <Box
                         sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FF5F56',
                         }}
-                      >
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            background: '#FF5F56',
-                          }}
-                        />
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            background: '#FFBD2E',
-                          }}
-                        />
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            background: '#27C93F',
-                          }}
-                        />
-                      </Box>
-                      <Typography
-                        variant="subtitle2"
+                      />
+                      <Box
                         sx={{
-                          color: alpha(theme.palette.common.white, 0.7),
-                          ml: 2,
-                          fontWeight: 500,
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FFBD2E',
                         }}
-                      >
-                        Database Connection & Query Execution
-                      </Typography>
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#27C93F',
+                        }}
+                      />
                     </Box>
-                    <SyntaxHighlighter
-                      language="python"
-                      style={vscDarkPlus}
-                      customStyle={{
-                        margin: 0,
-                        padding: '1.5rem',
-                        background: 'transparent',
-                        fontSize: '0.9rem',
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: alpha(theme.palette.common.white, 0.7),
+                        ml: 2,
+                        fontWeight: 500,
                       }}
                     >
-                      {`import mysql.connector
+                      Database Connection & Query Execution
+                    </Typography>
+                  </Box>
+                  <SyntaxHighlighter
+                    language="python"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      margin: 0,
+                      padding: '1.5rem',
+                      background: 'transparent',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    {`import mysql.connector
 from mysql.connector import Error
 from dotenv import load_dotenv
 import os
@@ -1106,88 +1098,88 @@ def execute_query(connection, query):
             print(row)
     except Error as e:
         print(f"Error executing query: {e}")`}
-                    </SyntaxHighlighter>
-                  </Paper>
-                  
-                  {/* Data Transformation Code */}
-                  <Paper
-                    elevation={0}
+                  </SyntaxHighlighter>
+                </Paper>
+                
+                {/* Data Transformation Code */}
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 0,
+                    background: alpha('#1E1E1E', 0.95),
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                    }
+                  }}
+                >
+                  <Box
                     sx={{
-                      p: 0,
-                      background: alpha('#1E1E1E', 0.95),
-                      borderRadius: '16px',
-                      overflow: 'hidden',
-                      boxShadow: '0 8px 32px rgba(0,0,0,0.15)',
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
-                      }
+                      display: 'flex',
+                      alignItems: 'center',
+                      p: 1.5,
+                      background: alpha('#0A1929', 0.8),
+                      borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
                     }}
                   >
                     <Box
                       sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        p: 1.5,
-                        background: alpha('#0A1929', 0.8),
-                        borderBottom: `1px solid ${alpha('#0A1929', 0.2)}`,
+                        gap: 1,
                       }}
                     >
                       <Box
                         sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FF5F56',
                         }}
-                      >
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            background: '#FF5F56',
-                          }}
-                        />
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            background: '#FFBD2E',
-                          }}
-                        />
-                        <Box
-                          sx={{
-                            width: 12,
-                            height: 12,
-                            borderRadius: '50%',
-                            background: '#27C93F',
-                          }}
-                        />
-                      </Box>
-                      <Typography
-                        variant="subtitle2"
+                      />
+                      <Box
                         sx={{
-                          color: alpha(theme.palette.common.white, 0.7),
-                          ml: 2,
-                          fontWeight: 500,
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#FFBD2E',
                         }}
-                      >
-                        Data Transformation & Loading
-                      </Typography>
+                      />
+                      <Box
+                        sx={{
+                          width: 12,
+                          height: 12,
+                          borderRadius: '50%',
+                          background: '#27C93F',
+                        }}
+                      />
                     </Box>
-                    <SyntaxHighlighter
-                      language="python"
-                      style={vscDarkPlus}
-                      customStyle={{
-                        margin: 0,
-                        padding: '1.5rem',
-                        background: 'transparent',
-                        fontSize: '0.9rem',
+                    <Typography
+                      variant="subtitle2"
+                      sx={{
+                        color: alpha(theme.palette.common.white, 0.7),
+                        ml: 2,
+                        fontWeight: 500,
                       }}
                     >
-                      {`# METHOD TO CREATE BASIS FOR ML ALGORITHMS PULLING FROM SQL with editable number of users
+                      Data Transformation & Loading
+                    </Typography>
+                  </Box>
+                  <SyntaxHighlighter
+                    language="python"
+                    style={vscDarkPlus}
+                    customStyle={{
+                      margin: 0,
+                      padding: '1.5rem',
+                      background: 'transparent',
+                      fontSize: '0.9rem',
+                    }}
+                  >
+                    {`# METHOD TO CREATE BASIS FOR ML ALGORITHMS PULLING FROM SQL with editable number of users
 def query_to_dataframe_for_users(connection, start_user_id, end_user_id):
     cursor = connection.cursor()
     try:
@@ -1239,406 +1231,954 @@ if connection:
     df = query_to_dataframe_for_users(connection, 1, 10)
     print(df.head())  # Display first few rows of the resulting dataframe
     connection.close()`}
-                    </SyntaxHighlighter>
-                  </Paper>
-                </Box>
+                  </SyntaxHighlighter>
+                </Paper>
+              </Box>
+              
+              {/* Features Cards Row */}
+              <Box sx={{ 
+                display: 'grid',
+                gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
+                gap: 4,
+              }}>
+                {/* Database Functions Card */}
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    background: '#0A1929',
+                    borderRadius: '16px',
+                    border: `1px solid ${alpha('#fff', 0.1)}`,
+                    transition: 'all 0.3s ease',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
+                      background: '#0A1929',
+                    }
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: '50%',
+                      background: alpha('#fff', 0.1),
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontSize: '1.2rem',
+                      fontWeight: 600,
+                      mb: 3,
+                    }}
+                  >
+                    1
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: '#fff',
+                      fontWeight: 600,
+                      mb: 2,
+                    }}
+                  >
+                    Database Functions
+                  </Typography>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: alpha('#fff', 0.9),
+                        mb: 1.5,
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: '50%',
+                          background: '#fff',
+                          mt: 1,
+                        }}
+                      />
+                      Created multiple Python functions to establish and manage connections to local MySQL database
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: alpha('#fff', 0.9),
+                        mb: 1.5,
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: '50%',
+                          background: '#fff',
+                          mt: 1,
+                        }}
+                      />
+                      Implemented functions for querying random samples from large tables for EDA
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: alpha('#fff', 0.9),
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: '50%',
+                          background: '#fff',
+                          mt: 1,
+                        }}
+                      />
+                      Developed comprehensive query functions to extract complete datasets
+                    </Typography>
+                  </Box>
+                </Paper>
                 
-                {/* Features Cards Row */}
-                <Box sx={{ 
-                  display: 'grid',
-                  gridTemplateColumns: { xs: '1fr', md: '1fr 1fr 1fr' },
-                  gap: 4,
-                }}>
-                  {/* Database Functions Card */}
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      p: 4,
+                {/* Data Transformation Card */}
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    background: '#0A1929',
+                    borderRadius: '16px',
+                    border: `1px solid ${alpha('#fff', 0.1)}`,
+                    transition: 'all 0.3s ease',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
                       background: '#0A1929',
-                      borderRadius: '16px',
-                      border: `1px solid ${alpha('#fff', 0.1)}`,
-                      transition: 'all 0.3s ease',
-                      height: '100%',
+                    }
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: '50%',
+                      background: alpha('#fff', 0.1),
                       display: 'flex',
-                      flexDirection: 'column',
-                      '&:hover': {
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
-                        background: '#0A1929',
-                      }
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontSize: '1.2rem',
+                      fontWeight: 600,
+                      mb: 3,
                     }}
                   >
-                    <Box
-                      sx={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: '50%',
-                        background: alpha('#fff', 0.1),
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#fff',
-                        fontSize: '1.2rem',
-                        fontWeight: 600,
-                        mb: 3,
-                      }}
-                    >
-                      1
-                    </Box>
-                    <Typography
-                      variant="h6"
-                      sx={{
-                        color: '#fff',
-                        fontWeight: 600,
-                        mb: 2,
-                      }}
-                    >
-                      Database Functions
-                    </Typography>
-                    <Box sx={{ flex: 1 }}>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: alpha('#fff', 0.9),
-                          mb: 1.5,
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: 1,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: '#fff',
-                            mt: 1,
-                          }}
-                        />
-                        Created multiple Python functions to establish and manage connections to local MySQL database
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: alpha('#fff', 0.9),
-                          mb: 1.5,
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: 1,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: '#fff',
-                            mt: 1,
-                          }}
-                        />
-                        Implemented functions for querying random samples from large tables for EDA
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: alpha('#fff', 0.9),
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: 1,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: '#fff',
-                            mt: 1,
-                          }}
-                        />
-                        Developed comprehensive query functions to extract complete datasets
-                      </Typography>
-                    </Box>
-                  </Paper>
-                  
-                  {/* Data Transformation Card */}
-                  <Paper
-                    elevation={0}
+                    2
+                  </Box>
+                  <Typography
+                    variant="h6"
                     sx={{
-                      p: 4,
-                      background: '#0A1929',
-                      borderRadius: '16px',
-                      border: `1px solid ${alpha('#fff', 0.1)}`,
-                      transition: 'all 0.3s ease',
-                      height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      '&:hover': {
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
-                        background: '#0A1929',
-                      }
+                      color: '#fff',
+                      fontWeight: 600,
+                      mb: 2,
                     }}
                   >
-                    <Box
-                      sx={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: '50%',
-                        background: alpha('#fff', 0.1),
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#fff',
-                        fontSize: '1.2rem',
-                        fontWeight: 600,
-                        mb: 3,
-                      }}
-                    >
-                      2
-                    </Box>
+                    Data Transformation
+                  </Typography>
+                  <Box sx={{ flex: 1 }}>
                     <Typography
-                      variant="h6"
+                      variant="body2"
                       sx={{
-                        color: '#fff',
-                        fontWeight: 600,
-                        mb: 2,
+                        color: alpha('#fff', 0.9),
+                        mb: 1.5,
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 1,
                       }}
                     >
-                      Data Transformation
+                      <Box
+                        sx={{
+                          width: 6,
+                          height: 6,
+                          borderRadius: '50%',
+                          background: '#fff',
+                          mt: 1,
+                        }}
+                      />
+                      Built transformation functions to convert MySQL query results into pandas DataFrames
                     </Typography>
-                    <Box sx={{ flex: 1 }}>
-                      <Typography
-                        variant="body2"
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: alpha('#fff', 0.9),
+                        mb: 1.5,
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
                         sx={{
-                          color: alpha('#fff', 0.9),
-                          mb: 1.5,
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: 1,
+                          width: 6,
+                          height: 6,
+                          borderRadius: '50%',
+                          background: '#fff',
+                          mt: 1,
                         }}
-                      >
-                        <Box
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: '#fff',
-                            mt: 1,
-                          }}
-                        />
-                        Built transformation functions to convert MySQL query results into pandas DataFrames
-                      </Typography>
-                      <Typography
-                        variant="body2"
+                      />
+                      Implemented efficient data processing for large-scale analysis
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: alpha('#fff', 0.9),
+                        display: 'flex',
+                        alignItems: 'flex-start',
+                        gap: 1,
+                      }}
+                    >
+                      <Box
                         sx={{
-                          color: alpha('#fff', 0.9),
-                          mb: 1.5,
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: 1,
+                          width: 6,
+                          height: 6,
+                          borderRadius: '50%',
+                          background: '#fff',
+                          mt: 1,
                         }}
-                      >
-                        <Box
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: '#fff',
-                            mt: 1,
-                          }}
-                        />
-                        Implemented efficient data processing for large-scale analysis
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: alpha('#fff', 0.9),
-                          display: 'flex',
-                          alignItems: 'flex-start',
-                          gap: 1,
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 6,
-                            height: 6,
-                            borderRadius: '50%',
-                            background: '#fff',
-                            mt: 1,
-                          }}
-                        />
-                        Ensured data integrity through robust error handling
-                      </Typography>
-                    </Box>
-                  </Paper>
-                  
-                  {/* Technology Stack Card */}
-                  <Paper
-                    elevation={0}
-                    sx={{
-                      p: 4,
+                      />
+                      Ensured data integrity through robust error handling
+                    </Typography>
+                  </Box>
+                </Paper>
+                
+                {/* Technology Stack Card */}
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    background: '#0A1929',
+                    borderRadius: '16px',
+                    border: `1px solid ${alpha('#fff', 0.1)}`,
+                    transition: 'all 0.3s ease',
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
                       background: '#0A1929',
-                      borderRadius: '16px',
-                      border: `1px solid ${alpha('#fff', 0.1)}`,
-                      transition: 'all 0.3s ease',
-                      height: '100%',
+                    }
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: '50%',
+                      background: alpha('#fff', 0.1),
                       display: 'flex',
-                      flexDirection: 'column',
-                      '&:hover': {
-                        transform: 'translateY(-5px)',
-                        boxShadow: '0 12px 40px rgba(0,0,0,0.2)',
-                        background: '#0A1929',
-                      }
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontSize: '1.2rem',
+                      fontWeight: 600,
+                      mb: 3,
                     }}
                   >
+                    3
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: '#fff',
+                      fontWeight: 600,
+                      mb: 2,
+                    }}
+                  >
+                    Technology Stack
+                  </Typography>
+                  <Box sx={{ 
+                    display: 'grid', 
+                    gridTemplateColumns: '1fr 1fr',
+                    gap: 2,
+                    flex: 1,
+                  }}>
                     <Box
                       sx={{
-                        width: 48,
-                        height: 48,
-                        borderRadius: '50%',
+                        p: 2,
                         background: alpha('#fff', 0.1),
+                        borderRadius: '8px',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#fff',
-                        fontSize: '1.2rem',
-                        fontWeight: 600,
-                        mb: 3,
+                        gap: 1,
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                          background: alpha('#fff', 0.15),
+                          transform: 'translateY(-3px)',
+                        }
                       }}
                     >
-                      3
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          background: '#fff',
+                        }}
+                      />
+                      <Typography variant="body2" sx={{ color: '#fff' }}>
+                        mysql.connector
+                      </Typography>
                     </Box>
-                    <Typography
-                      variant="h6"
+                    <Box
                       sx={{
-                        color: '#fff',
-                        fontWeight: 600,
-                        mb: 2,
+                        p: 2,
+                        background: alpha('#fff', 0.1),
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                          background: alpha('#fff', 0.15),
+                          transform: 'translateY(-3px)',
+                        }
                       }}
                     >
-                      Technology Stack
-                    </Typography>
-                    <Box sx={{ 
-                      display: 'grid', 
-                      gridTemplateColumns: '1fr 1fr',
-                      gap: 2,
-                      flex: 1,
-                    }}>
                       <Box
                         sx={{
-                          p: 2,
-                          background: alpha('#fff', 0.1),
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
-                          transition: 'all 0.2s ease',
-                          '&:hover': {
-                            background: alpha('#fff', 0.15),
-                            transform: 'translateY(-3px)',
-                          }
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          background: '#fff',
                         }}
-                      >
-                        <Box
-                          sx={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: '50%',
-                            background: '#fff',
-                          }}
-                        />
-                        <Typography variant="body2" sx={{ color: '#fff' }}>
-                          mysql.connector
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          p: 2,
-                          background: alpha('#fff', 0.1),
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
-                          transition: 'all 0.2s ease',
-                          '&:hover': {
-                            background: alpha('#fff', 0.15),
-                            transform: 'translateY(-3px)',
-                          }
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: '50%',
-                            background: '#fff',
-                          }}
-                        />
-                        <Typography variant="body2" sx={{ color: '#fff' }}>
-                          dotenv
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          p: 2,
-                          background: alpha('#fff', 0.1),
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
-                          transition: 'all 0.2s ease',
-                          '&:hover': {
-                            background: alpha('#fff', 0.15),
-                            transform: 'translateY(-3px)',
-                          }
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: '50%',
-                            background: '#fff',
-                          }}
-                        />
-                        <Typography variant="body2" sx={{ color: '#fff' }}>
-                          os
-                        </Typography>
-                      </Box>
-                      <Box
-                        sx={{
-                          p: 2,
-                          background: alpha('#fff', 0.1),
-                          borderRadius: '8px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 1,
-                          transition: 'all 0.2s ease',
-                          '&:hover': {
-                            background: alpha('#fff', 0.15),
-                            transform: 'translateY(-3px)',
-                          }
-                        }}
-                      >
-                        <Box
-                          sx={{
-                            width: 8,
-                            height: 8,
-                            borderRadius: '50%',
-                            background: '#fff',
-                          }}
-                        />
-                        <Typography variant="body2" sx={{ color: '#fff' }}>
-                          pandas
-                        </Typography>
-                      </Box>
+                      />
+                      <Typography variant="body2" sx={{ color: '#fff' }}>
+                        dotenv
+                      </Typography>
                     </Box>
-                  </Paper>
-                </Box>
+                    <Box
+                      sx={{
+                        p: 2,
+                        background: alpha('#fff', 0.1),
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                          background: alpha('#fff', 0.15),
+                          transform: 'translateY(-3px)',
+                        }
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          background: '#fff',
+                        }}
+                      />
+                      <Typography variant="body2" sx={{ color: '#fff' }}>
+                        os
+                      </Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        p: 2,
+                        background: alpha('#fff', 0.1),
+                        borderRadius: '8px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        transition: 'all 0.2s ease',
+                        '&:hover': {
+                          background: alpha('#fff', 0.15),
+                          transform: 'translateY(-3px)',
+                        }
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          width: 8,
+                          height: 8,
+                          borderRadius: '50%',
+                          background: '#fff',
+                        }}
+                      />
+                      <Typography variant="body2" sx={{ color: '#fff' }}>
+                        pandas
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Paper>
               </Box>
             </Box>
           )}
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
+const MLApproachSection: React.FC<{ theme: any }> = ({ theme }) => {
+  return (
+    <Box
+      sx={{
+        py: 12,
+        backgroundColor: alpha(theme.palette.background.paper, 0.8),
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      <Container maxWidth="lg">
+        <Typography
+          variant="h2"
+          component="h2"
+          align="center"
+          gutterBottom
+          sx={{
+            fontWeight: 'bold',
+            mb: 6,
+            color: theme.palette.text.primary,
+          }}
+        >
+          Machine Learning Approach
+        </Typography>
+
+        {/* User Order Pattern Table */}
+        <Paper
+          elevation={0}
+          sx={{
+            p: 3,
+            background: 'white',
+            borderRadius: '8px',
+            mb: 4,
+            overflowX: 'auto'
+          }}
+        >
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell 
+                  sx={{ 
+                    border: '1px solid #e0e0e0',
+                    backgroundColor: '#E3F2FD',
+                    padding: '8px',
+                    minWidth: '100px',
+                    color: 'black',
+                    fontWeight: 'bold'
+                  }}
+                >
+                  Order number
+                </TableCell>
+                {[...Array(10)].map((_, i) => (
+                  <TableCell 
+                    key={i} 
+                    align="center"
+                    sx={{ 
+                      border: '1px solid #e0e0e0',
+                      backgroundColor: '#E3F2FD',
+                      padding: '8px',
+                      minWidth: '40px',
+                      color: 'black',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    {i + 1}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[
+                { user: 'User A', pattern: ['p', 'p', 'p', 'p', 'p', 'tr', '', '', '', ''] },
+                { user: 'User B', pattern: ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'tr', ''] },
+                { user: 'User C', pattern: ['p', 'p', 'p', 'p', 'p', 'p', 'te', '', '', ''] },
+                { user: 'User D', pattern: ['p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'tr'] }
+              ].map((row, i) => (
+                <TableRow key={i}>
+                  <TableCell 
+                    sx={{ 
+                      border: '1px solid #e0e0e0',
+                      backgroundColor: '#FFF9C4',
+                      padding: '8px',
+                      fontWeight: 'normal',
+                      color: 'black'
+                    }}
+                  >
+                    {row.user}
+                  </TableCell>
+                  {row.pattern.map((cell, j) => (
+                    <TableCell 
+                      key={j} 
+                      align="center"
+                      sx={{ 
+                        border: '1px solid #e0e0e0',
+                        backgroundColor: cell === 'tr' ? '#E8F5E9' : 
+                                       cell === 'te' ? '#FFF3E0' : 
+                                       cell === 'p' ? '#F5F5F5' : 'white',
+                        padding: '8px',
+                        color: 'black'
+                      }}
+                    >
+                      {cell}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+
+        {/* Dataset Structure Table */}
+        <Paper
+          elevation={0}
+          sx={{
+            p: 3,
+            background: 'white',
+            borderRadius: '8px',
+            mb: 4,
+            overflowX: 'auto'
+          }}
+        >
+          {/* Column Headers */}
+          <Box sx={{ display: 'flex', mb: 2, borderBottom: '1px solid #e0e0e0', pb: 2 }}>
+            <Box sx={{ width: '200px', pr: 2 }}>
+              <Typography variant="subtitle2" sx={{ color: 'black', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Primary Key
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'rgba(0,0,0,0.7)', display: 'block' }}>
+                (products from prior orders)
+              </Typography>
+            </Box>
+            <Box sx={{ flex: 1, px: 2 }}>
+              <Typography variant="subtitle2" sx={{ color: 'black', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Predictor variables - X
+              </Typography>
+              <Typography variant="caption" sx={{ color: 'rgba(0,0,0,0.7)', display: 'block' }}>
+                (based on prior orders)
+              </Typography>
+            </Box>
+            <Box sx={{ width: '100px', px: 2 }}>
+              <Typography variant="subtitle2" sx={{ color: 'black', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                train/test
+              </Typography>
+            </Box>
+            <Box sx={{ width: '120px', px: 2 }}>
+              <Typography variant="subtitle2" sx={{ color: 'black', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Future order
+              </Typography>
+            </Box>
+            <Box sx={{ width: '100px', pl: 2 }}>
+              <Typography variant="subtitle2" sx={{ color: 'black', fontWeight: 'bold', fontSize: '0.875rem' }}>
+                Response Y
+              </Typography>
+            </Box>
+          </Box>
+
+          {/* Data Table */}
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ backgroundColor: '#BBDEFB', padding: '8px', fontWeight: 'bold', color: 'black' }}>user_id</TableCell>
+                <TableCell sx={{ backgroundColor: '#BBDEFB', padding: '8px', fontWeight: 'bold', color: 'black' }}>product_id</TableCell>
+                <TableCell sx={{ backgroundColor: '#C8E6C9', padding: '8px', fontWeight: 'bold', color: 'black' }}>...</TableCell>
+                <TableCell sx={{ backgroundColor: '#FFE0B2', padding: '8px', fontWeight: 'bold', color: 'black' }}>eval_set</TableCell>
+                <TableCell sx={{ backgroundColor: '#E1BEE7', padding: '8px', fontWeight: 'bold', color: 'black' }}>order_id</TableCell>
+                <TableCell sx={{ backgroundColor: '#FFCDD2', padding: '8px', fontWeight: 'bold', color: 'black' }}>reordered</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {[
+                { user: 1, product: 196, eval: 'train', order: 1187899, reordered: 1 },
+                { user: 1, product: 10258, eval: 'train', order: 1187899, reordered: 1 },
+                { user: 1, product: 10326, eval: 'train', order: 1187899, reordered: 0 },
+                { user: 1, product: 12427, eval: 'train', order: 1187899, reordered: 0 },
+                { user: 1, product: 13032, eval: 'train', order: 1187899, reordered: 0 },
+                { user: 1, product: 13176, eval: 'train', order: 1187899, reordered: 0 },
+                { user: 1, product: 14084, eval: 'train', order: 1187899, reordered: 0 },
+                { user: 2, product: 14084, eval: 'test', order: 2125869, reordered: 0 },
+                { user: 2, product: 25133, eval: 'test', order: 2125869, reordered: 0 }
+              ].map((row, i) => (
+                <TableRow key={i}>
+                  <TableCell sx={{ backgroundColor: '#BBDEFB', padding: '8px', color: 'black' }}>{row.user}</TableCell>
+                  <TableCell sx={{ backgroundColor: '#BBDEFB', padding: '8px', color: 'black' }}>{row.product}</TableCell>
+                  <TableCell sx={{ backgroundColor: '#C8E6C9', padding: '8px', color: 'black' }}>...</TableCell>
+                  <TableCell sx={{ backgroundColor: '#FFE0B2', padding: '8px', color: 'black' }}>{row.eval}</TableCell>
+                  <TableCell sx={{ backgroundColor: '#E1BEE7', padding: '8px', color: 'black' }}>{row.order}</TableCell>
+                  <TableCell sx={{ backgroundColor: '#FFCDD2', padding: '8px', color: 'black' }}>{row.reordered}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Paper>
+
+        {/* Data Pipeline Section */}
+        <Box sx={{ mt: 6 }}>
+          <Typography
+            variant="h4"
+            component="h3"
+            gutterBottom
+            sx={{
+              fontWeight: 'bold',
+              mb: 4,
+              color: theme.palette.text.primary,
+            }}
+          >
+            Data Pipeline Architecture
+          </Typography>
+
+          <Box sx={{ 
+            display: 'grid',
+            gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+            gap: 4,
+          }}>
+            {/* Dynamic Data Retrieval */}
+            <Box>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  height: '100%',
+                  background: alpha(theme.palette.primary.main, 0.05),
+                  borderRadius: '12px',
+                  border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <StorageIcon sx={{ color: theme.palette.primary.main, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    Dynamic Data Retrieval
+                  </Typography>
+                </Box>
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                  A custom Python function interfaces with a MySQL database to enable flexible data extraction. Users can define specific ranges, allowing for dynamic querying tailored to different analysis scopes.
+                </Typography>
+              </Paper>
+            </Box>
+
+            {/* Feature Extraction */}
+            <Box>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  height: '100%',
+                  background: alpha(theme.palette.secondary.main, 0.05),
+                  borderRadius: '12px',
+                  border: `1px solid ${alpha(theme.palette.secondary.main, 0.1)}`,
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <AnalyticsIcon sx={{ color: theme.palette.secondary.main, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    Feature Extraction
+                  </Typography>
+                </Box>
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                  Key behavioral, product-related, and temporal features—such as order frequency and time—are extracted from the database to form the foundation of the dataset.
+                </Typography>
+              </Paper>
+            </Box>
+
+            {/* Order-Product Integration */}
+            <Box>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  height: '100%',
+                  background: alpha(theme.palette.success.main, 0.05),
+                  borderRadius: '12px',
+                  border: `1px solid ${alpha(theme.palette.success.main, 0.1)}`,
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <DataIcon sx={{ color: theme.palette.success.main, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    Order-Product Integration
+                  </Typography>
+                </Box>
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                  Order data is joined with product metadata to uncover purchasing patterns, establishing relationships critical for accurate forecasting.
+                </Typography>
+              </Paper>
+            </Box>
+
+            {/* Contextual Enrichment */}
+            <Box>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  height: '100%',
+                  background: alpha(theme.palette.info.main, 0.05),
+                  borderRadius: '12px',
+                  border: `1px solid ${alpha(theme.palette.info.main, 0.1)}`,
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <ApiIcon sx={{ color: theme.palette.info.main, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    Contextual Enrichment
+                  </Typography>
+                </Box>
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                  Additional attributes from related tables (e.g., aisles and departments) are merged to provide richer context and a more holistic feature set.
+                </Typography>
+              </Paper>
+            </Box>
+
+            {/* ML-Ready Structuring */}
+            <Box sx={{ gridColumn: { xs: '1', md: '1 / -1' } }}>
+              <Paper
+                elevation={0}
+                sx={{
+                  p: 3,
+                  background: alpha(theme.palette.warning.main, 0.05),
+                  borderRadius: '12px',
+                  border: `1px solid ${alpha(theme.palette.warning.main, 0.1)}`,
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                  <CodeIcon sx={{ color: theme.palette.warning.main, mr: 2 }} />
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    ML-Ready Structuring
+                  </Typography>
+                </Box>
+                <Typography variant="body1" sx={{ color: theme.palette.text.secondary }}>
+                  The final dataset is cleaned and organized for machine learning, transforming the extracted variables into powerful predictors for future product demand.
+                </Typography>
+              </Paper>
+            </Box>
+          </Box>
+        </Box>
+
+        {/* Feature Engineering Section */}
+        <Box sx={{ mt: 6 }}>
+          <Typography
+            variant="h4"
+            component="h3"
+            gutterBottom
+            sx={{
+              fontWeight: 'bold',
+              mb: 4,
+              color: theme.palette.text.primary,
+            }}
+          >
+            Feature Engineering & Selection
+          </Typography>
+
+          <Box sx={{ 
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 3,
+            position: 'relative',
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              left: { xs: 0, md: '50%' },
+              top: 0,
+              bottom: 0,
+              width: '2px',
+              background: alpha(theme.palette.primary.main, 0.3),
+              transform: 'translateX(-50%)',
+            }
+          }}>
+            {/* Data Splitting */}
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              gap: 3,
+              position: 'relative',
+            }}>
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pr: { md: 3 },
+                textAlign: { md: 'right' }
+              }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    background: alpha('#0A1929', 0.8),
+                    borderRadius: '12px',
+                    border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.2)}`,
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: { md: 'flex-end' } }}>
+                    <StorageIcon sx={{ color: theme.palette.primary.main, mr: 2 }} />
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white' }}>
+                      Data Splitting Strategy
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                    The dataset is strategically split into prior orders and predictive orders. This separation ensures that features are derived exclusively from historical data, maintaining the integrity of our predictive modeling approach.
+                  </Typography>
+                </Paper>
+              </Box>
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pl: { md: 3 },
+                display: { xs: 'none', md: 'block' }
+              }} />
+            </Box>
+
+            {/* Feature Weights */}
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              gap: 3,
+              position: 'relative',
+            }}>
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pr: { md: 3 },
+                display: { xs: 'none', md: 'block' }
+              }} />
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pl: { md: 3 }
+              }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    background: alpha('#0A1929', 0.8),
+                    borderRadius: '12px',
+                    border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.2)}`,
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <AnalyticsIcon sx={{ color: theme.palette.primary.main, mr: 2 }} />
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white' }}>
+                      Key Feature Identification
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                    Critical features are identified and weighted based on their predictive power, including order day of week, aisle ID, days since prior order, and other temporal and categorical variables that influence purchasing behavior.
+                  </Typography>
+                </Paper>
+              </Box>
+            </Box>
+
+            {/* Feature Creation */}
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              gap: 3,
+              position: 'relative',
+            }}>
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pr: { md: 3 },
+                textAlign: { md: 'right' }
+              }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    background: alpha('#0A1929', 0.8),
+                    borderRadius: '12px',
+                    border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.2)}`,
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2, justifyContent: { md: 'flex-end' } }}>
+                    <DataIcon sx={{ color: theme.palette.primary.main, mr: 2 }} />
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white' }}>
+                      Feature Creation Strategy
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                    All features are engineered from prior orders, ensuring that our model learns from historical patterns rather than the target "train-set" orders we aim to predict.
+                  </Typography>
+                </Paper>
+              </Box>
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pl: { md: 3 },
+                display: { xs: 'none', md: 'block' }
+              }} />
+            </Box>
+
+            {/* Feature Categories */}
+            <Box sx={{ 
+              display: 'flex',
+              flexDirection: { xs: 'column', md: 'row' },
+              alignItems: 'center',
+              gap: 3,
+              position: 'relative',
+            }}>
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pr: { md: 3 },
+                display: { xs: 'none', md: 'block' }
+              }} />
+              <Box sx={{ 
+                width: { xs: '100%', md: '50%' },
+                pl: { md: 3 }
+              }}>
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    background: alpha('#0A1929', 0.8),
+                    borderRadius: '12px',
+                    border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.2)}`,
+                    }
+                  }}
+                >
+                  <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                    <ApiIcon sx={{ color: theme.palette.primary.main, mr: 2 }} />
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white' }}>
+                      Feature Categories
+                    </Typography>
+                  </Box>
+                  <Typography variant="body1" sx={{ color: 'rgba(255,255,255,0.9)' }}>
+                    Two main categories of features are created: Frequency Features (capturing purchase patterns) and Temporal Features (tracking time-based behaviors), providing a comprehensive view of customer purchasing habits.
+                  </Typography>
+                </Paper>
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Container>
     </Box>
@@ -2573,9 +3113,9 @@ plt.figure(figsize=(12, 7))
 ax = sns.lineplot(x=orders_by_dow.index, y=orders_by_dow.values, marker="o", color="deepskyblue", linewidth=3)
 peak_day = orders_by_dow.idxmax()
 plt.plot(peak_day, orders_by_dow[peak_day], marker="o", markersize=12, color="crimson", label="Peak Day")
-plt.title("Order Counts by Day of the Week", fontsize=18, fontweight="bold", color="midnightblue")
-plt.xlabel("Day of the Week", fontsize=14, color="midnightblue")
-plt.ylabel("Order Count", fontsize=14, color="midnightblue")
+plt.title("Order Counts by Day of the Week", fontsize=18, fontweight="bold", color="black")
+plt.xlabel("Day of the Week", fontsize=14, color="black")
+plt.ylabel("Order Count", fontsize=14, color="black")
 plt.xticks(ticks=range(7), labels=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], rotation=45, fontsize=12)
 plt.yticks(fontsize=12)
 plt.legend(["Order Trend", "Peak Day"], loc="upper left", fontsize=12, frameon=True, shadow=True, fancybox=True)
@@ -2680,9 +3220,9 @@ plt.figure(figsize=(12, 8))
 heatmap_data = dept_order_df.pivot_table(index='Department', values='Order Frequency', aggfunc='sum')
 ax = sns.heatmap(heatmap_data, annot=True, fmt=".0f", cmap="YlGnBu", cbar=True, linewidths=1, linecolor="black")
 
-ax.set_title("Order Frequency by Department", fontsize=18, fontweight="bold", color="midnightblue")
-ax.set_xlabel("Order Frequency", fontsize=14, color="midnightblue")
-ax.set_ylabel("Department", fontsize=14, color="midnightblue")
+ax.set_title("Order Frequency by Department", fontsize=18, fontweight="bold", color="black")
+ax.set_xlabel("Order Frequency", fontsize=14, color="black")
+ax.set_ylabel("Department", fontsize=14, color="black")
 
 plt.tight_layout()
 plt.show()`}
@@ -2693,6 +3233,7 @@ plt.show()`}
           </Box>
         </Container>
       </Box>
+      <MLApproachSection theme={theme} />
     </Box>
   );
 };
