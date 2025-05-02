@@ -31,6 +31,8 @@ import InfoIcon from '@mui/icons-material/Info';
 import CodeIcon from '@mui/icons-material/Code';
 import SchoolIcon from '@mui/icons-material/School';
 import LinkIcon from '@mui/icons-material/Link';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import StorageIcon from '@mui/icons-material/Storage';
 
 const Navbar: React.FC = () => {
   const [activeSection, setActiveSection] = useState('project');
@@ -53,12 +55,12 @@ const Navbar: React.FC = () => {
       description: 'Explore our forecasting models and results'
     },
     { 
-      text: 'Data', 
+      text: 'Dataset', 
       icon: <DatasetIcon />,
-      path: 'data',
+      path: 'dataset',
       badge: 0,
       color: theme.palette.secondary.main,
-      secondaryIcon: <BarChartIcon />,
+      secondaryIcon: <StorageIcon />,
       description: 'Learn about our dataset and methodology'
     },
     { 
@@ -73,11 +75,20 @@ const Navbar: React.FC = () => {
     { 
       text: 'References', 
       icon: <BookIcon />,
-      path: 'references',
+      path: 'acknowledgments',
       badge: 0,
       color: theme.palette.warning.main,
       secondaryIcon: <LinkIcon />,
       description: 'View sources and resources used in this project'
+    },
+    { 
+      text: 'GitHub', 
+      icon: <CodeIcon />,
+      path: 'github',
+      badge: 0,
+      color: '#181717',
+      secondaryIcon: <GitHubIcon />,
+      description: 'View the project source code on GitHub'
     },
   ];
 

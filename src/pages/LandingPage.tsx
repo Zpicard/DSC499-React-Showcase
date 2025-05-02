@@ -19,6 +19,7 @@ import {
   TableRow,
   TableCell,
   TableBody,
+  Chip,
 } from '@mui/material';
 import { Element, Link as ScrollLink } from 'react-scroll';
 import { useSpring, animated, config } from '@react-spring/web';
@@ -45,6 +46,15 @@ import DatabaseSchema from '../components/DatabaseSchema';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import ModelPerformance from '../components/ModelPerformance';
+import TimelineIcon from '@mui/icons-material/Timeline';
+import StoreIcon from '@mui/icons-material/Store';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import BookIcon from '@mui/icons-material/Book';
+import LinkIcon from '@mui/icons-material/Link';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CategoryIcon from '@mui/icons-material/Category';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 // Define the blink animation
 const blink = {
@@ -2186,6 +2196,992 @@ const MLApproachSection: React.FC<{ theme: any }> = ({ theme }) => {
   );
 };
 
+const DatasetSection: React.FC<{ theme: any }> = ({ theme }) => {
+  const [hoveredTable, setHoveredTable] = useState<number | null>(null);
+  const [activeTab, setActiveTab] = useState(0);
+  
+  const tables = [
+    { 
+      name: 'orders.csv', 
+      description: 'Contains order information including user_id, order_number, order_dow, order_hour_of_day, and days_since_prior_order',
+      columns: [
+        'order_id',
+        'user_id',
+        'eval_set',
+        'order_number',
+        'order_dow',
+        'order_hour_of_day',
+        'days_since_prior_order'
+      ],
+      icon: <ShoppingCartIcon /> 
+    },
+    { 
+      name: 'products.csv', 
+      description: 'Product information including product_id, product_name, aisle_id, and department_id',
+      columns: [
+        'product_id',
+        'product_name',
+        'aisle_id',
+        'department_id'
+      ],
+      icon: <InventoryIcon /> 
+    },
+    { 
+      name: 'order_products__*.csv', 
+      description: 'Order product details including order_id, product_id, add_to_cart_order, and reordered flag',
+      columns: [
+        'order_id',
+        'product_id',
+        'add_to_cart_order',
+        'reordered'
+      ],
+      icon: <ListAltIcon /> 
+    },
+    { 
+      name: 'aisles.csv', 
+      description: 'Aisle information including aisle_id and aisle name',
+      columns: [
+        'aisle_id',
+        'aisle'
+      ],
+      icon: <StoreIcon /> 
+    },
+    { 
+      name: 'departments.csv', 
+      description: 'Department information including department_id and department name',
+      columns: [
+        'department_id',
+        'department'
+      ],
+      icon: <CategoryIcon /> 
+    },
+  ];
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveTab(newValue);
+  };
+
+  return (
+    <Element name="dataset">
+      <Box
+        sx={{
+          py: 8,
+          background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.05)} 100%)`,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <Box 
+              sx={{ 
+                position: 'relative',
+                mb: 6,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: -20,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '80px',
+                  height: '4px',
+                  background: `linear-gradient(90deg, ${alpha(theme.palette.primary.main, 0.2)}, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.main, 0.2)})`,
+                  borderRadius: '2px',
+                },
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: -20,
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '80px',
+                  height: '4px',
+                  background: `linear-gradient(90deg, ${alpha(theme.palette.primary.main, 0.2)}, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.main, 0.2)})`,
+                  borderRadius: '2px',
+                }
+              }}
+            >
+              <Typography 
+                variant="h3" 
+                sx={{ 
+                  textAlign: 'center', 
+                  color: theme.palette.primary.main,
+                  fontWeight: 700,
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase',
+                  fontSize: { xs: '2rem', sm: '2.5rem' },
+                  position: 'relative',
+                  textShadow: `0 2px 4px ${alpha(theme.palette.primary.main, 0.2)}`,
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    left: -30,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '16px',
+                    height: '16px',
+                    background: theme.palette.primary.main,
+                    borderRadius: '50%',
+                    opacity: 0.3,
+                  },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    right: -30,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '16px',
+                    height: '16px',
+                    background: theme.palette.primary.main,
+                    borderRadius: '50%',
+                    opacity: 0.3,
+                  }
+                }}
+              >
+                Dataset Information
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: theme.palette.text.secondary,
+                  mt: 2,
+                  textAlign: 'center',
+                  maxWidth: '600px',
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  letterSpacing: '0.3px'
+                }}
+              >
+                Explore the structure and insights of our dataset
+              </Typography>
+            </Box>
+            
+            <Paper
+              elevation={0}
+              sx={{
+                p: 4,
+                background: alpha('#0A1929', 0.6),
+                backdropFilter: 'blur(10px)',
+                borderRadius: '20px',
+                border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
+                width: '100%',
+                maxWidth: '1000px',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-5px)',
+                  boxShadow: `0 8px 32px ${alpha(theme.palette.primary.main, 0.2)}`,
+                }
+              }}
+            >
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+                <StorageIcon sx={{ fontSize: 40, color: theme.palette.primary.main }} />
+                <Typography variant="h4" sx={{ 
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  letterSpacing: '0.3px',
+                  fontSize: { xs: '1.5rem', sm: '1.75rem' }
+                }}>
+                  Instacart Market Basket Analysis
+                </Typography>
+              </Box>
+              
+              <Typography variant="body1" sx={{ 
+                mb: 4, 
+                color: theme.palette.text.primary,
+                lineHeight: 1.8,
+                fontSize: { xs: '1rem', sm: '1.1rem' },
+                fontWeight: 400,
+                letterSpacing: '0.3px'
+              }}>
+                This project utilizes the Instacart Market Basket Analysis dataset, which contains 3.4 million orders from over 200,000 Instacart users.
+                The dataset provides a rich foundation for analyzing customer purchasing patterns and predicting future purchases, with data spanning across
+                50,000+ products organized into 134 aisles and 21 departments.
+              </Typography>
+
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="h5" sx={{ 
+                  mb: 3, 
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  letterSpacing: '0.3px',
+                  fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                }}>
+                  Dataset Structure
+                </Typography>
+                <Tabs
+                  value={activeTab}
+                  onChange={handleTabChange}
+                  variant="scrollable"
+                  scrollButtons="auto"
+                  sx={{
+                    borderBottom: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                    mb: 3,
+                    '& .MuiTab-root': {
+                      color: theme.palette.text.secondary,
+                      transition: 'all 0.3s ease',
+                      fontSize: { xs: '0.9rem', sm: '1rem' },
+                      fontWeight: 500,
+                      letterSpacing: '0.3px',
+                      '&.Mui-selected': {
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                      },
+                      '&:hover': {
+                        color: theme.palette.primary.main,
+                        background: alpha(theme.palette.primary.main, 0.05),
+                      },
+                    },
+                  }}
+                >
+                  {tables.map((table, index) => (
+                    <Tab
+                      key={table.name}
+                      label={table.name}
+                      icon={table.icon}
+                      iconPosition="start"
+                    />
+                  ))}
+                </Tabs>
+
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    background: alpha(theme.palette.primary.main, 0.05),
+                    border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                    borderRadius: '12px',
+                  }}
+                >
+                  <Typography variant="h6" sx={{ 
+                    mb: 2, 
+                    color: theme.palette.primary.main,
+                    fontWeight: 600,
+                    letterSpacing: '0.3px',
+                    fontSize: { xs: '1.1rem', sm: '1.25rem' }
+                  }}>
+                    {tables[activeTab].name}
+                  </Typography>
+                  <Typography variant="body2" sx={{ 
+                    mb: 3, 
+                    color: theme.palette.text.secondary,
+                    lineHeight: 1.6,
+                    fontSize: { xs: '0.95rem', sm: '1rem' },
+                    fontWeight: 400,
+                    letterSpacing: '0.3px'
+                  }}>
+                    {tables[activeTab].description}
+                  </Typography>
+                  <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                    {tables[activeTab].columns.map((column) => (
+                      <Chip
+                        key={column}
+                        label={column}
+                        size="small"
+                        sx={{
+                          background: alpha(theme.palette.primary.main, 0.1),
+                          color: theme.palette.primary.main,
+                          fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                          fontWeight: 500,
+                          letterSpacing: '0.3px',
+                          '&:hover': {
+                            background: alpha(theme.palette.primary.main, 0.2),
+                          },
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </Paper>
+              </Box>
+
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="h5" sx={{ 
+                  mb: 3, 
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  letterSpacing: '0.3px',
+                  fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                }}>
+                  Dataset Statistics
+                </Typography>
+                <Box sx={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                  gap: 2 
+                }}>
+                  {[
+                    { value: '3.4M', label: 'Total Orders' },
+                    { value: '200K+', label: 'Unique Users' },
+                    { value: '50K+', label: 'Unique Products' },
+                    { value: '134', label: 'Product Aisles' }
+                  ].map((stat, index) => (
+                    <Paper
+                      key={index}
+                      elevation={0}
+                      sx={{
+                        p: 2,
+                        background: alpha(theme.palette.primary.main, 0.05),
+                        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                        borderRadius: '12px',
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ 
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        letterSpacing: '0.3px',
+                        fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                      }}>
+                        {stat.value}
+                      </Typography>
+                      <Typography variant="body2" sx={{ 
+                        color: theme.palette.text.secondary,
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        fontWeight: 400,
+                        letterSpacing: '0.3px'
+                      }}>
+                        {stat.label}
+                      </Typography>
+                    </Paper>
+                  ))}
+                </Box>
+              </Box>
+
+              <Button
+                variant="outlined"
+                href="https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis"
+                target="_blank"
+                rel="noopener noreferrer"
+                startIcon={<StorageIcon />}
+                sx={{
+                  color: theme.palette.primary.main,
+                  borderColor: theme.palette.primary.main,
+                  fontSize: { xs: '0.9rem', sm: '1rem' },
+                  fontWeight: 500,
+                  letterSpacing: '0.3px',
+                  '&:hover': {
+                    borderColor: theme.palette.primary.light,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                    transform: 'translateY(-2px)',
+                  },
+                  transition: 'all 0.3s ease',
+                }}
+              >
+                View Dataset on Kaggle
+              </Button>
+            </Paper>
+          </Box>
+        </Container>
+      </Box>
+    </Element>
+  );
+};
+
+const AcknowledgmentsSection: React.FC<{ theme: any }> = ({ theme }) => {
+  const acknowledgments = [
+    {
+      category: 'Environment Management',
+      items: ['Anaconda Navigator', 'VS Code']
+    },
+    {
+      category: 'Software/Language',
+      items: ['MySQL', 'Python', 'Jupyter Notebook']
+    },
+    {
+      category: 'Python Libraries',
+      items: ['pandas', 'matplotlib', 'seaborn', 'numpy', 'sklearn', 'LightGBM', 'XGBoost']
+    },
+    {
+      category: 'Web Development',
+      items: ['React', 'TypeScript', 'Material-UI', 'Node.js', 'GitHub']
+    }
+  ];
+
+  const references = [
+    {
+      id: 1,
+      text: 'Kaggle. Instacart Market Basket Analysis. Kaggle. Available at: https://www.kaggle.com/competitions/instacart-market-basket-analysis/code. Accessed: October 7, 2024'
+    },
+    {
+      id: 2,
+      text: 'Phu, Nguyen. Instacart - LightGBM. Kaggle. Available at: https://www.kaggle.com/code/nguyncngph/instacart-lightgbm. Accessed: October 11, 2024'
+    },
+    {
+      id: 3,
+      text: 'OpenAI. ChatGPT (December 2024 version). OpenAI, 2024, https://openai.com.'
+    },
+    {
+      id: 4,
+      text: 'Scikit-learn developers. (n.d.). RandomForestClassifier. Scikit-learn. Retrieved January 30, 2025, from https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html'
+    },
+    {
+      id: 5,
+      text: 'Chen, T., & Guestrin, C. (2016). XGBoost: A scalable tree boosting system. Retrieved January 30, 2025, from https://xgboost.readthedocs.io/en/stable/'
+    },
+    {
+      id: 6,
+      text: 'Ke, G., et al. (2017). LightGBM: A Highly Efficient Gradient Boosting Decision Tree. Retrieved January 30, 2025, from https://lightgbm.readthedocs.io/en/stable/'
+    },
+    {
+      id: 7,
+      text: 'React Documentation. (n.d.). React - A JavaScript library for building user interfaces. Retrieved January 30, 2025, from https://reactjs.org/docs/getting-started.html'
+    },
+    {
+      id: 8,
+      text: 'Material-UI Documentation. (n.d.). Material-UI: A popular React UI framework. Retrieved January 30, 2025, from https://mui.com/material-ui/getting-started/'
+    },
+    {
+      id: 9,
+      text: 'TypeScript Documentation. (n.d.). TypeScript - JavaScript with syntax for types. Retrieved January 30, 2025, from https://www.typescriptlang.org/docs/'
+    },
+    {
+      id: 10,
+      text: 'GitHub Documentation. (n.d.). GitHub: Where the world builds software. Retrieved January 30, 2025, from https://docs.github.com/en'
+    },
+    {
+      id: 11,
+      text: 'Pandas Documentation. (n.d.). pandas: Powerful data structures for data analysis. Retrieved January 30, 2025, from https://pandas.pydata.org/docs/'
+    },
+    {
+      id: 12,
+      text: 'Matplotlib Documentation. (n.d.). Matplotlib: Visualization with Python. Retrieved January 30, 2025, from https://matplotlib.org/stable/contents.html'
+    },
+    {
+      id: 13,
+      text: 'Seaborn Documentation. (n.d.). Seaborn: Statistical data visualization. Retrieved January 30, 2025, from https://seaborn.pydata.org/'
+    },
+    {
+      id: 14,
+      text: 'NumPy Documentation. (n.d.). NumPy: The fundamental package for scientific computing with Python. Retrieved January 30, 2025, from https://numpy.org/doc/'
+    }
+  ];
+
+  return (
+    <Element name="acknowledgments">
+      <Box
+        sx={{
+          py: 8,
+          background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.05)} 100%)`,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              gap: 4,
+            }}
+          >
+            <Box sx={{ 
+              position: 'relative',
+              mb: 6,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: -20,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80px',
+                height: '4px',
+                background: `linear-gradient(90deg, ${alpha(theme.palette.primary.main, 0.2)}, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.main, 0.2)})`,
+                borderRadius: '2px',
+              },
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                bottom: -20,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '80px',
+                height: '4px',
+                background: `linear-gradient(90deg, ${alpha(theme.palette.primary.main, 0.2)}, ${theme.palette.primary.main}, ${alpha(theme.palette.primary.main, 0.2)})`,
+                borderRadius: '2px',
+              }
+            }}>
+              <Typography 
+                variant="h3" 
+                sx={{ 
+                  textAlign: 'center', 
+                  color: theme.palette.primary.main,
+                  fontWeight: 700,
+                  letterSpacing: '0.5px',
+                  textTransform: 'uppercase',
+                  fontSize: { xs: '2rem', sm: '2.5rem' },
+                  position: 'relative',
+                  textShadow: `0 2px 4px ${alpha(theme.palette.primary.main, 0.2)}`,
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    left: -30,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '16px',
+                    height: '16px',
+                    background: theme.palette.primary.main,
+                    borderRadius: '50%',
+                    opacity: 0.3,
+                  },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    right: -30,
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '16px',
+                    height: '16px',
+                    background: theme.palette.primary.main,
+                    borderRadius: '50%',
+                    opacity: 0.3,
+                  }
+                }}
+              >
+                Acknowledgments & References
+              </Typography>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  color: theme.palette.text.secondary,
+                  mt: 2,
+                  textAlign: 'center',
+                  maxWidth: '600px',
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  fontWeight: 400,
+                  lineHeight: 1.6,
+                  letterSpacing: '0.3px'
+                }}
+              >
+                Recognizing the tools, resources, and individuals that contributed to this project
+              </Typography>
+            </Box>
+
+            <Paper
+              elevation={0}
+              sx={{
+                p: 4,
+                background: alpha('#0A1929', 0.6),
+                backdropFilter: 'blur(10px)',
+                borderRadius: '20px',
+                border: `1px solid ${alpha(theme.palette.primary.main, 0.3)}`,
+                width: '100%',
+                maxWidth: '1000px',
+                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                '&:hover': {
+                  transform: 'translateY(-5px)',
+                  boxShadow: `0 8px 32px ${alpha(theme.palette.primary.main, 0.2)}`,
+                }
+              }}
+            >
+              <Box sx={{ mb: 4 }}>
+                <Typography variant="h5" sx={{ 
+                  mb: 3, 
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  letterSpacing: '0.3px',
+                  fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                }}>
+                  Acknowledgments
+                </Typography>
+
+                <Paper
+                  elevation={0}
+                  sx={{
+                    p: 4,
+                    mb: 4,
+                    background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.primary.main, 0.05)} 100%)`,
+                    border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
+                    borderRadius: '16px',
+                    textAlign: 'center',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-5px)',
+                      boxShadow: `0 8px 32px ${alpha(theme.palette.primary.main, 0.2)}`,
+                    }
+                  }}
+                >
+                  <Box sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'center',
+                    gap: 2
+                  }}>
+                    <SchoolIcon sx={{ 
+                      fontSize: 60, 
+                      color: theme.palette.primary.main,
+                      opacity: 0.8
+                    }} />
+                    <Typography variant="h4" sx={{ 
+                      color: theme.palette.primary.main,
+                      fontWeight: 700,
+                      letterSpacing: '0.5px',
+                      fontSize: { xs: '1.75rem', sm: '2.25rem' },
+                      textTransform: 'uppercase',
+                      textShadow: `0 2px 4px ${alpha(theme.palette.primary.main, 0.2)}`
+                    }}>
+                      University of Massachusetts Dartmouth
+                    </Typography>
+                    <Typography variant="h5" sx={{ 
+                      color: theme.palette.primary.main,
+                      fontWeight: 600,
+                      letterSpacing: '0.3px',
+                      fontSize: { xs: '1.25rem', sm: '1.5rem' },
+                      mb: 2
+                    }}>
+                      Data Science Program
+                    </Typography>
+                    <Typography variant="body1" sx={{ 
+                      color: theme.palette.text.primary,
+                      lineHeight: 1.8,
+                      fontSize: { xs: '1rem', sm: '1.1rem' },
+                      fontWeight: 400,
+                      letterSpacing: '0.3px',
+                      maxWidth: '800px',
+                      mx: 'auto'
+                    }}>
+                      This project was developed as part of the Data Science program at the University of Massachusetts Dartmouth. 
+                      I extend my deepest gratitude to the faculty, staff, and the entire Data Science community at UMass Dartmouth 
+                      for providing an exceptional learning environment and the resources necessary to bring this project to fruition.
+                    </Typography>
+                  </Box>
+                </Paper>
+                
+                <Box sx={{ 
+                  display: 'grid', 
+                  gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr' },
+                  gap: 3 
+                }}>
+                  {acknowledgments.map((group, index) => (
+                    <Paper
+                      key={index}
+                      elevation={0}
+                      sx={{
+                        p: 3,
+                        background: alpha(theme.palette.primary.main, 0.05),
+                        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                        borderRadius: '12px',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          background: alpha(theme.palette.primary.main, 0.08),
+                          transform: 'translateY(-2px)',
+                        }
+                      }}
+                    >
+                      <Typography variant="h6" sx={{ 
+                        mb: 2, 
+                        color: theme.palette.primary.main,
+                        fontWeight: 600,
+                        letterSpacing: '0.3px',
+                        fontSize: { xs: '1.1rem', sm: '1.25rem' }
+                      }}>
+                        {group.category}
+                      </Typography>
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                        {group.items.map((item, itemIndex) => (
+                          <Chip
+                            key={itemIndex}
+                            label={item}
+                            size="small"
+                            sx={{
+                              background: alpha(theme.palette.primary.main, 0.1),
+                              color: theme.palette.primary.main,
+                              fontSize: { xs: '0.8rem', sm: '0.9rem' },
+                              fontWeight: 500,
+                              letterSpacing: '0.3px',
+                              '&:hover': {
+                                background: alpha(theme.palette.primary.main, 0.2),
+                              },
+                            }}
+                          />
+                        ))}
+                      </Box>
+                    </Paper>
+                  ))}
+                </Box>
+
+                <Typography variant="body1" sx={{ 
+                  mt: 3, 
+                  color: theme.palette.text.primary,
+                  lineHeight: 1.8,
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  fontWeight: 400,
+                  letterSpacing: '0.3px'
+                }}>
+                  Thank you to Prof. Alfa Heryudono for his invaluable guidance and support throughout this project, and to the tools and software that enabled efficient development, analysis, and execution of this work. Special thanks to the open-source community for providing the essential tools and libraries that made this project possible.
+                </Typography>
+              </Box>
+
+              <Box>
+                <Typography variant="h5" sx={{ 
+                  mb: 3, 
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  letterSpacing: '0.3px',
+                  fontSize: { xs: '1.25rem', sm: '1.5rem' }
+                }}>
+                  References
+                </Typography>
+                
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  {references.map((ref) => (
+                    <Paper
+                      key={ref.id}
+                      elevation={0}
+                      sx={{
+                        p: 2,
+                        background: alpha(theme.palette.primary.main, 0.05),
+                        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                        borderRadius: '12px',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          background: alpha(theme.palette.primary.main, 0.08),
+                          transform: 'translateX(5px)',
+                        }
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ 
+                        color: theme.palette.text.secondary,
+                        lineHeight: 1.6,
+                        fontSize: { xs: '0.9rem', sm: '1rem' },
+                        fontWeight: 400,
+                        letterSpacing: '0.3px'
+                      }}>
+                        [{ref.id}] {ref.text}
+                      </Typography>
+                    </Paper>
+                  ))}
+                </Box>
+              </Box>
+            </Paper>
+          </Box>
+        </Container>
+      </Box>
+    </Element>
+  );
+};
+
+const GitHubSection: React.FC<{ theme: any }> = ({ theme }) => {
+  return (
+    <Box sx={{ 
+      py: 8,
+      backgroundColor: theme.palette.background.default,
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      <Container maxWidth="lg">
+        <Box sx={{ 
+          position: 'relative',
+          zIndex: 1,
+          textAlign: 'center',
+          mb: 6
+        }}>
+          <Typography 
+            variant="h3" 
+            sx={{ 
+              fontWeight: 700,
+              color: theme.palette.text.primary,
+              mb: 2,
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+              letterSpacing: '0.5px',
+              position: 'relative',
+              display: 'inline-block',
+              '&::before, &::after': {
+                content: '""',
+                position: 'absolute',
+                top: '50%',
+                width: '100px',
+                height: '2px',
+                background: `linear-gradient(90deg, ${theme.palette.primary.main}, transparent)`,
+                transform: 'translateY(-50%)'
+              },
+              '&::before': {
+                left: '-120px'
+              },
+              '&::after': {
+                right: '-120px',
+                background: `linear-gradient(-90deg, ${theme.palette.primary.main}, transparent)`
+              },
+              '& span': {
+                position: 'relative',
+                display: 'inline-block',
+                '&::before, &::after': {
+                  content: '""',
+                  position: 'absolute',
+                  width: '12px',
+                  height: '12px',
+                  borderRadius: '50%',
+                  background: theme.palette.primary.main,
+                  top: '50%',
+                  transform: 'translateY(-50%)'
+                },
+                '&::before': {
+                  left: '-30px'
+                },
+                '&::after': {
+                  right: '-30px'
+                }
+              }
+            }}
+          >
+            <span>Project Repository</span>
+          </Typography>
+          <Typography 
+            variant="subtitle1" 
+            sx={{ 
+              color: theme.palette.text.secondary,
+              maxWidth: '600px',
+              mx: 'auto',
+              mb: 4,
+              fontSize: { xs: '1rem', sm: '1.1rem' },
+              lineHeight: 1.6
+            }}
+          >
+            Explore the complete project code, documentation, and implementation details on GitHub
+          </Typography>
+        </Box>
+
+        <Paper 
+          elevation={0}
+          sx={{
+            p: 4,
+            borderRadius: 4,
+            background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${theme.palette.background.default} 100%)`,
+            border: `1px solid ${theme.palette.divider}`,
+            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+            '&:hover': {
+              transform: 'translateY(-5px)',
+              boxShadow: `0 8px 24px ${theme.palette.primary.main}20`
+            }
+          }}
+        >
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            gap: 4
+          }}>
+            <Box sx={{ 
+              flex: 1,
+              textAlign: { xs: 'center', md: 'left' }
+            }}>
+              <Typography 
+                variant="h5" 
+                sx={{ 
+                  fontWeight: 600,
+                  color: theme.palette.text.primary,
+                  mb: 2,
+                  fontSize: { xs: '1.5rem', sm: '1.75rem' }
+                }}
+              >
+                Instacart Market Basket Analysis
+              </Typography>
+              <Typography 
+                variant="body1" 
+                sx={{ 
+                  color: theme.palette.text.secondary,
+                  mb: 3,
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  lineHeight: 1.6
+                }}
+              >
+                A comprehensive machine learning project that predicts customer product reorders using LightGBM, Random Forest, and XGBoost models. The repository includes data preprocessing, feature engineering, model implementation, and performance analysis.
+              </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                href="https://github.com/Zpicard/Instacart-DSC-499-Capstone"
+                target="_blank"
+                rel="noopener noreferrer"
+                startIcon={<GitHubIcon />}
+                sx={{
+                  borderRadius: 2,
+                  px: 4,
+                  py: 1.5,
+                  fontSize: '1.1rem',
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  boxShadow: `0 4px 12px ${theme.palette.primary.main}40`,
+                  '&:hover': {
+                    boxShadow: `0 6px 16px ${theme.palette.primary.main}60`
+                  }
+                }}
+              >
+                View on GitHub
+              </Button>
+            </Box>
+            <Box sx={{ 
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+            }}>
+              <Box sx={{
+                width: '100%',
+                maxWidth: '400px',
+                height: '200px',
+                background: `linear-gradient(135deg, ${theme.palette.primary.main}20, ${theme.palette.primary.main}10)`,
+                borderRadius: 3,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <GitHubIcon sx={{ 
+                  fontSize: 120,
+                  color: theme.palette.primary.main,
+                  opacity: 0.2,
+                  position: 'absolute',
+                  zIndex: 0
+                }} />
+                <Box sx={{
+                  position: 'relative',
+                  zIndex: 1,
+                  textAlign: 'center',
+                  p: 3
+                }}>
+                  <Typography 
+                    variant="h6" 
+                    sx={{ 
+                      color: theme.palette.primary.main,
+                      fontWeight: 600,
+                      mb: 2,
+                      fontSize: { xs: '1.2rem', sm: '1.4rem' }
+                    }}
+                  >
+                    Explore the Code
+                  </Typography>
+                  <Typography 
+                    variant="body2" 
+                    sx={{ 
+                      color: theme.palette.text.secondary,
+                      lineHeight: 1.6,
+                      maxWidth: '300px',
+                      mx: 'auto'
+                    }}
+                  >
+                    Dive into the implementation details, model architectures, and data processing pipelines
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Paper>
+      </Container>
+    </Box>
+  );
+};
+
 const LandingPage: React.FC = () => {
   const theme = useTheme();
   const [displayedText, setDisplayedText] = useState('');
@@ -3236,6 +4232,10 @@ plt.show()`}
       </Box>
       <MLApproachSection theme={theme} />
       <ModelPerformance />
+      
+      <DatasetSection theme={theme} />
+      <AcknowledgmentsSection theme={theme} />
+      <GitHubSection theme={theme} />
     </Box>
   );
 };
