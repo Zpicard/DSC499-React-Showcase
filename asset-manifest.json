@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/grocery-sales-prediction/static/css/main.181be119.css",
-    "main.js": "/grocery-sales-prediction/static/js/main.f774ae36.js",
-    "static/js/453.5e9a6cf2.chunk.js": "/grocery-sales-prediction/static/js/453.5e9a6cf2.chunk.js",
-    "index.html": "/grocery-sales-prediction/index.html",
-    "main.181be119.css.map": "/grocery-sales-prediction/static/css/main.181be119.css.map",
-    "main.f774ae36.js.map": "/grocery-sales-prediction/static/js/main.f774ae36.js.map",
-    "453.5e9a6cf2.chunk.js.map": "/grocery-sales-prediction/static/js/453.5e9a6cf2.chunk.js.map"
+    "main.css": "/DSC499-React-Showcase/static/css/main.181be119.css",
+    "main.js": "/DSC499-React-Showcase/static/js/main.b6832d95.js",
+    "static/js/453.5e9a6cf2.chunk.js": "/DSC499-React-Showcase/static/js/453.5e9a6cf2.chunk.js",
+    "index.html": "/DSC499-React-Showcase/index.html",
+    "main.181be119.css.map": "/DSC499-React-Showcase/static/css/main.181be119.css.map",
+    "main.b6832d95.js.map": "/DSC499-React-Showcase/static/js/main.b6832d95.js.map",
+    "453.5e9a6cf2.chunk.js.map": "/DSC499-React-Showcase/static/js/453.5e9a6cf2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.181be119.css",
-    "static/js/main.f774ae36.js"
+    "static/js/main.b6832d95.js"
   ]
 }
