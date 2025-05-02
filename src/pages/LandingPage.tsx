@@ -1850,6 +1850,8 @@ const MLApproachSection: React.FC<{ theme: any }> = ({ theme }) => {
               fontWeight: 'bold',
               mb: 4,
               color: theme.palette.text.primary,
+              textAlign: 'center',
+              fontSize: '2.5rem',
             }}
           >
             Data Pipeline Architecture
@@ -1991,6 +1993,8 @@ const MLApproachSection: React.FC<{ theme: any }> = ({ theme }) => {
               fontWeight: 'bold',
               mb: 4,
               color: theme.palette.text.primary,
+              textAlign: 'center',
+              fontSize: '2.5rem',
             }}
           >
             Feature Engineering & Selection
@@ -2920,41 +2924,61 @@ const AcknowledgmentsSection: React.FC<{ theme: any }> = ({ theme }) => {
                 </Typography>
               </Box>
 
-              <Box>
-                <Typography variant="h5" sx={{ 
-                  mb: 3, 
-                  color: theme.palette.primary.main,
-                  fontWeight: 600,
-                  letterSpacing: '0.3px',
-                  fontSize: { xs: '1.25rem', sm: '1.5rem' }
-                }}>
+              <Box sx={{ mt: 6 }}>
+                <Typography
+                  variant="h4"
+                  component="h3"
+                  gutterBottom
+                  sx={{
+                    fontWeight: 'bold',
+                    mb: 4,
+                    color: theme.palette.text.primary,
+                    textAlign: 'center',
+                    fontSize: '2.5rem',
+                  }}
+                >
                   References
                 </Typography>
-                
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <Box sx={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  gap: 3,
+                  maxWidth: '1200px',
+                  margin: '0 auto',
+                  p: 3,
+                }}>
                   {references.map((ref) => (
                     <Paper
                       key={ref.id}
-                      elevation={0}
+                      elevation={3}
                       sx={{
-                        p: 2,
-                        background: alpha(theme.palette.primary.main, 0.05),
-                        border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                        p: 3,
+                        background: '#0A1929',
                         borderRadius: '12px',
+                        border: `2px solid ${theme.palette.primary.main}`,
                         transition: 'all 0.3s ease',
                         '&:hover': {
-                          background: alpha(theme.palette.primary.main, 0.08),
-                          transform: 'translateX(5px)',
+                          transform: 'translateY(-5px)',
+                          boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.3)}`,
                         }
                       }}
                     >
-                      <Typography variant="body2" sx={{ 
-                        color: theme.palette.text.secondary,
-                        lineHeight: 1.6,
-                        fontSize: { xs: '0.9rem', sm: '1rem' },
-                        fontWeight: 400,
-                        letterSpacing: '0.3px'
-                      }}>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color: 'white',
+                          fontSize: '1.2rem',
+                          lineHeight: 1.8,
+                          fontWeight: 500,
+                          '& a': {
+                            color: theme.palette.primary.light,
+                            textDecoration: 'none',
+                            '&:hover': {
+                              textDecoration: 'underline',
+                            }
+                          }
+                        }}
+                      >
                         [{ref.id}] {ref.text}
                       </Typography>
                     </Paper>
@@ -3182,6 +3206,302 @@ const GitHubSection: React.FC<{ theme: any }> = ({ theme }) => {
   );
 };
 
+const AboutMeSection: React.FC<{ theme: any }> = ({ theme }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <Box
+      ref={containerRef}
+      sx={{
+        py: { xs: 8, md: 12 },
+        px: { xs: 2, md: 4 },
+        background: `linear-gradient(180deg, ${alpha(theme.palette.background.default, 0.8)} 0%, ${alpha(theme.palette.background.paper, 0.9)} 100%)`,
+        backdropFilter: 'blur(10px)',
+        position: 'relative',
+        overflow: 'hidden',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: '100%',
+          background: `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.primary.main, 0.05)} 0%, transparent 70%)`,
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 1s ease-in-out',
+        },
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            gap: { xs: 4, md: 8 },
+            position: 'relative',
+            zIndex: 1,
+          }}
+        >
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3,
+              transform: isVisible ? 'translateX(0)' : 'translateX(-50px)',
+              opacity: isVisible ? 1 : 0,
+              transition: 'all 0.8s ease-out',
+            }}
+          >
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2,
+                mb: 1,
+              }}
+            >
+              <Box
+                sx={{
+                  width: '4px',
+                  height: '40px',
+                  background: `linear-gradient(to bottom, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  borderRadius: '2px',
+                }}
+              />
+              <Typography
+                variant="h4"
+                sx={{
+                  color: theme.palette.primary.main,
+                  fontWeight: 700,
+                  letterSpacing: '0.5px',
+                }}
+              >
+                About Me
+              </Typography>
+            </Box>
+            <Typography
+              variant="h3"
+              sx={{
+                color: theme.palette.text.primary,
+                fontWeight: 700,
+                lineHeight: 1.2,
+                mb: 1,
+                background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                display: 'inline-block',
+              }}
+            >
+              Zachary Picard
+            </Typography>
+            <Typography
+              variant="h5"
+              sx={{
+                color: theme.palette.text.secondary,
+                fontWeight: 500,
+                lineHeight: 1.4,
+                mb: 2,
+              }}
+            >
+              Data Scientist & Software Engineer
+            </Typography>
+            <Typography
+              variant="body1"
+              sx={{
+                color: theme.palette.text.secondary,
+                lineHeight: 1.8,
+                fontSize: '1.1rem',
+                maxWidth: '600px',
+                mb: 3,
+              }}
+            >
+              I'm a passionate data scientist and software engineer with expertise in machine learning, data analysis, and full-stack development. This project showcases my skills in building end-to-end data science solutions and creating intuitive web applications.
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                gap: 2,
+                flexWrap: 'wrap',
+              }}
+            >
+              <Button
+                variant="contained"
+                startIcon={<GitHubIcon />}
+                href="https://github.com/Zpicard"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  color: 'white',
+                  borderRadius: '8px',
+                  px: 3,
+                  py: 1.5,
+                  '&:hover': {
+                    background: `linear-gradient(45deg, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.3)}`,
+                  },
+                  transition: 'all 0.3s ease-in-out',
+                }}
+              >
+                GitHub
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<LinkIcon />}
+                href="https://www.linkedin.com/in/zachary-picard-217138224/"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  borderColor: theme.palette.primary.main,
+                  color: theme.palette.primary.main,
+                  borderRadius: '8px',
+                  px: 3,
+                  py: 1.5,
+                  '&:hover': {
+                    borderColor: theme.palette.primary.light,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.2)}`,
+                  },
+                  transition: 'all 0.3s ease-in-out',
+                }}
+              >
+                LinkedIn
+              </Button>
+              <Button
+                variant="outlined"
+                startIcon={<WebIcon />}
+                href="https://zpicard.github.io"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  borderColor: theme.palette.primary.main,
+                  color: theme.palette.primary.main,
+                  borderRadius: '8px',
+                  px: 3,
+                  py: 1.5,
+                  '&:hover': {
+                    borderColor: theme.palette.primary.light,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                    transform: 'translateY(-2px)',
+                    boxShadow: `0 8px 24px ${alpha(theme.palette.primary.main, 0.2)}`,
+                  },
+                  transition: 'all 0.3s ease-in-out',
+                }}
+              >
+                Portfolio
+              </Button>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              transform: isVisible ? 'translateX(0)' : 'translateX(50px)',
+              opacity: isVisible ? 1 : 0,
+              transition: 'all 0.8s ease-out',
+            }}
+          >
+            <Box
+              sx={{
+                position: 'relative',
+                width: { xs: '200px', md: '300px' },
+                height: { xs: '200px', md: '300px' },
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '-10px',
+                  left: '-10px',
+                  right: '-10px',
+                  bottom: '-10px',
+                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  borderRadius: '50%',
+                  zIndex: -1,
+                  opacity: 0.3,
+                  animation: `${keyframes({
+                    '0%': { transform: 'scale(1)' },
+                    '50%': { transform: 'scale(1.1)' },
+                    '100%': { transform: 'scale(1)' },
+                  })} 3s ease-in-out infinite`,
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: `0 0 50px ${alpha(theme.palette.primary.main, 0.3)}`,
+                  animation: `${keyframes({
+                    '0%': { transform: 'scale(1)' },
+                    '50%': { transform: 'scale(1.05)' },
+                    '100%': { transform: 'scale(1)' },
+                  })} 3s ease-in-out infinite`,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: `radial-gradient(circle at 50% 50%, ${alpha(theme.palette.common.white, 0.2)} 0%, transparent 70%)`,
+                  },
+                }}
+              >
+                <Typography
+                  variant="h2"
+                  sx={{
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: { xs: '4rem', md: '6rem' },
+                    textShadow: `0 0 20px ${alpha(theme.palette.common.white, 0.5)}`,
+                    letterSpacing: '2px',
+                  }}
+                >
+                  ZP
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
+
 const LandingPage: React.FC = () => {
   const theme = useTheme();
   const [displayedText, setDisplayedText] = useState('');
@@ -3190,6 +3510,8 @@ const LandingPage: React.FC = () => {
   const [typingSpeed, setTypingSpeed] = useState(100);
   const navigate = useNavigate();
   const [selectedSkillType, setSelectedSkillType] = useState<string>('Data Science');
+  const [typedText, setTypedText] = useState('');
+  const [skillType, setSkillType] = useState('Data Science');
 
   // Typing animation effect
   useEffect(() => {
@@ -3250,13 +3572,11 @@ const LandingPage: React.FC = () => {
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
+        background: 'linear-gradient(135deg, #81c784 0%, #66bb6a 100%)',
       }}
     >
-      {/* Background Animation */}
-      <NetworkAnimation />
-
       {/* Hero Section */}
-      <Element name="overview">
+      <Element name="project">
         <Box
           sx={{
             minHeight: '100vh',
@@ -4233,9 +4553,18 @@ plt.show()`}
       <MLApproachSection theme={theme} />
       <ModelPerformance />
       
-      <DatasetSection theme={theme} />
-      <AcknowledgmentsSection theme={theme} />
-      <GitHubSection theme={theme} />
+      <Element name="dataset">
+        <DatasetSection theme={theme} />
+      </Element>
+      <Element name="acknowledgments">
+        <AcknowledgmentsSection theme={theme} />
+      </Element>
+      <Element name="github">
+        <GitHubSection theme={theme} />
+      </Element>
+      <Element name="about">
+        <AboutMeSection theme={theme} />
+      </Element>
     </Box>
   );
 };
