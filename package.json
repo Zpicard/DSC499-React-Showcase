@@ -2,7 +2,7 @@
   "name": "grocery-sales-prediction",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Zpicard.github.io/grocery-sales-prediction",
+  "homepage": "https://Zpicard.github.io/DSC499-React-Showcase",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
